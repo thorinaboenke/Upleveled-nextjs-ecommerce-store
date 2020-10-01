@@ -1,26 +1,27 @@
 import cookie from 'js-cookie';
 
 export function getCartfromCookies() {
-  const cart = cookie.getJSON('cart') || [5];
+  const cart = cookie.getJSON('cart') || [];
   return cart;
 }
 
 export function addAmountToCartInCookie(id, quantity) {
-  // the id and quantity are passed to the function
+  // the id and quantity (as integer) are passed to the function
   // get the old cart from the Cookies
   const cart = getCartfromCookies();
-
-  let newCart = [];
-  // if the id in the cart is the id argument passed in, increase the amount by the quantity passed in:
-  // first check if the cart exists
-  // to make the new cart, map over existing cart, and if the id is the same as passed in, increase amount by the quantity
-  if (cart.length !== 0) {
-    console.log(cart);
+  let newCart;
+  // first check if the cart exists (length) and the id is aleady in, filter will return true, then to make the new cart, map over existing cart, and where the id is the same as passed in, increase amount by the quantity
+  // otherwise, cart is empty or does not contain the item yet, push item to new cart
+  if (cart.length !== 0 && cart.find((item) => item.id === id)) {
+    //console.log(cart);
     newCart = cart.map((item) =>
-      item.id !== id ? item : { ...item, amount: (amount += quantity) },
+      item.id !== id ? item : { ...item, amount: (item.amount += quantity) },
     );
-  } else {
+  } else if (cart.length !== 0) {
+    newCart = [...cart];
     newCart.push({ id: id, amount: quantity });
+  } else {
+    newCart = [{ id: id, amount: quantity }];
   }
 
   // set the cookie to the new cart and return new cart

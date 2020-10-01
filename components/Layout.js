@@ -5,6 +5,7 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 
 export default function Layout(props) {
+  // <Footer></Footer>
   return (
     <>
       <Head>
@@ -12,7 +13,6 @@ export default function Layout(props) {
       </Head>
       <Header></Header>
       <main className={styles.main}>{props.children}</main>
-      <Footer></Footer>
     </>
   );
 }

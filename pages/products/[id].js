@@ -19,13 +19,15 @@ export default function Product(props) {
 
   return (
     <Layout>
+      <div className={styles.pageleft}></div>
+      <div className={styles.pageright}></div>
       <div>
-        {product.name}
-        <br />
-        {product.description}
-        <br />
-        {product.price} credits
-        <br />
+        <div className={styles.imagecontainer}>
+          <img src={product.imgUrl} alt=""></img>
+        </div>
+        <div className={styles.producttitle}>{product.name}</div>
+        <div className={styles.productdescription}>{product.description}</div>
+        <div className={styles.price}>{product.price} Credits</div>
         <AddToCart id={product.id} />
       </div>
     </Layout>

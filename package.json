@@ -19,7 +19,7 @@
     "@types/react-dom": "16.0.5",
     "@typescript-eslint/eslint-plugin": "4.2.0",
     "@typescript-eslint/parser": "4.2.0",
-    "@upleveled/eslint-config-upleveled": "^1.0.3",
+    "@upleveled/eslint-config-upleveled": "^1.0.4",
     "babel-eslint": "10.1.0",
     "eslint": "6.6.0",
     "eslint-config-react-app": "5.2.1",

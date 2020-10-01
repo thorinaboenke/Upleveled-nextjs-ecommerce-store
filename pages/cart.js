@@ -4,6 +4,7 @@ import styles from '../styles/Home.module.css';
 import Link from 'next/link';
 import Layout from '../components/Layout';
 import nextCookies from 'next-cookies';
+import Cart from '../components/Cart';
 
 export default function cart(props) {
   const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +17,8 @@ export default function cart(props) {
       </Head>
       <Layout>
         <h1>Shopping Cart</h1>
-        <p>{cart[0].id}</p>
+        <Cart cart={cart} />
+
         <Link href="./checkout">
           <a>Go to Checkout</a>
         </Link>
@@ -33,4 +35,13 @@ export function getServerSideProps(context) {
       cartFromCookies: cartFromCookies,
     },
   };
+}
+
+{
+  /* <p>
+ID: {cart[0]?.id} Amount: {cart[0]?.amount}
+</p>
+<p>
+ID: {cart[1]?.id} Amount: {cart[1]?.amount}
+</p> */
 }
