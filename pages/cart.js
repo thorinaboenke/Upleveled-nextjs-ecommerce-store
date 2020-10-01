@@ -18,10 +18,6 @@ export default function cart(props) {
       <Layout>
         <h1>Shopping Cart</h1>
         <Cart cart={cart} />
-
-        <Link href="./checkout">
-          <a>Go to Checkout</a>
-        </Link>
       </Layout>
     </div>
   );

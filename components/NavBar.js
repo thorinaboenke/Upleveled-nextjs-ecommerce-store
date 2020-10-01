@@ -17,7 +17,9 @@ export default function NavBar() {
         <a>Products</a>
       </Link>
       <Link href="/cart">
-        <a>Cart</a>
+        <a>
+          Cart <img src="" alt="" />
+        </a>
       </Link>
       <Link href="/checkout">
         <a>Checkout</a>
