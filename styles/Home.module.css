@@ -117,7 +117,7 @@
 .shop .productcard {
   width: 300px;
   /* background-color: yellow; */
-  height: 400px;
+  min-height: 400px;
   padding: 2rem;
   margin: 1rem;
   -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.75);
@@ -149,29 +149,29 @@
 /* single product page */
 .pageleft {
   position: absolute;
-  width: 40px;
-  height: 40px;
+  width: 20px;
+  height: 20px;
   top: 50vh;
-  left: 40px;
+  left: 20px;
   border-radius: 5px;
   border-top: 60px solid transparent;
   border-bottom: 60px solid transparent;
 
-  border-right: 60px solid #621b00;
+  border-right: 30px solid #621b00;
 }
 .pageright {
   position: absolute;
-  width: 40px;
-  height: 40px;
+  width: 20px;
+  height: 20px;
   top: 50vh;
-  right: 40px;
+  right: 20px;
   border-radius: 5px;
   width: 0;
   height: 0;
   border-top: 60px solid transparent;
   border-bottom: 60px solid transparent;
 
-  border-left: 60px solid #621b00;
+  border-left: 30px solid #621b00;
 }
 
 .pageright:hover,
