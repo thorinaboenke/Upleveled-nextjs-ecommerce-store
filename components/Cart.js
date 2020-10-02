@@ -1,16 +1,24 @@
-import { useState } from 'react';
-import cart from '../pages/cart';
+import { useState, useEffect } from 'react';
+import cookie from 'js-cookie';
 import { products } from '../utils/database';
 import styles from '../styles/Home.module.css';
-import { addAmountToCartInCookie } from '../utils/cookies';
 import Link from 'next/link';
 import { calculateTotalItemsInCart } from '../utils/cookies';
+import { addAmountToCartInCookie } from '../utils/cookies';
+import { removeItemFromCartInCookie } from '../utils/cookies';
+import { updateAmountInCartInCookie } from '../utils/cookies';
+import { getCartFromCookies } from '../utils/cookies';
 
-export default function Cart({ cart }) {
+export default function Cart({ cart, setCart }) {
   const shippingFee = 49;
   const minOrderValue = 499;
-  console.log(products);
-  console.log(cart);
+
+  //const [cart, setCart] = useState(getCartFromCookies());
+
+  // useEffect(() => {
+  //   setCart(getCartFromCookies());
+  // }, []);
+
   function calculateTotal(cart) {
     const total = cart.reduce((acc, curr) => {
       return (
@@ -54,7 +62,28 @@ export default function Cart({ cart }) {
                         .name
                     }
                   </div>
-                  <div className={styles.quant}>Quantity: {item.amount}</div>
+
+                  <div className={styles.quant}>
+                    Quantity:{' '}
+                    <input
+                      type="number"
+                      min="1"
+                      value={item.amount}
+                      onChange={(e) => {
+                        updateAmountInCartInCookie(item.id, e.target.value);
+                        setCart(getCartFromCookies());
+                      }}
+                    ></input>
+                    <button
+                      className={styles.removebutton}
+                      onClick={() => {
+                        removeItemFromCartInCookie(item.id);
+                        setCart(getCartFromCookies());
+                      }}
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
                 <div className={styles.priceandsubtotal}>
                   <div>
@@ -92,10 +121,12 @@ export default function Cart({ cart }) {
             </div>
           </div>
         </div>
-        <div>Items in Cart: {calculateTotalItemsInCart(cart)}</div>
-        <Link href="./checkout">
-          <a>Go to Checkout</a>
-        </Link>
+        <div className={styles.cartsummary}>
+          <div>Items: {calculateTotalItemsInCart(cart)}</div>
+          <Link href="./checkout">
+            <a className={styles.checkoutbutton}>Go to Checkout</a>
+          </Link>
+        </div>
       </div>
     );
   } else {
@@ -103,7 +134,7 @@ export default function Cart({ cart }) {
       <>
         <div>Your Cart is empty</div>
         <Link href={'/'}>
-          <div>Back to Store</div>
+          <div className={styles.checkoutbutton}>Back to Store</div>
         </Link>
       </>
     );

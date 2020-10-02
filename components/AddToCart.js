@@ -11,6 +11,8 @@ export default function AddToCart(props) {
     setQuantity(e.target.value);
   };
 
+ 
+
   function handleAddtoCart(e) {
     e.preventDefault();
     const id = props.id;
@@ -29,6 +31,7 @@ export default function AddToCart(props) {
       <form onSubmit={(e) => handleAddtoCart(e)}>
         <input
           type="number"
+          min="1"
           placeholder="quantity"
           value={quantity}
           onChange={(e) => handleChange(e)}

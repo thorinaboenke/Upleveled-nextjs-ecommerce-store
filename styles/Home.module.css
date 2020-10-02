@@ -34,6 +34,11 @@
   align-items: center;
 }
 
+.nav a > .carticon {
+  color: white;
+  size: 10px;
+}
+
 .nav a {
   margin: 0 2rem 0 2rem;
   display: flex;
@@ -45,7 +50,7 @@
   margin-left: 0.5rem;
   margin-right: auto;
 }
-.nav a img {
+.nav a .logo {
   border-radius: 50%;
   height: 60px;
   margin-right: auto;
@@ -55,12 +60,51 @@
 .nav a:hover {
   text-decoration: underline;
 }
+/* landing page */
 
-/* Shoppage */
+.landing {
+  text-align: center;
+}
+
+.landing h1 {
+  font-size: 44px;
+  margin: 1em 0 2em 0;
+}
+
+.landing .section1 {
+  padding: 50px 10% 40px 10%;
+  line-height: 1.5;
+  font-size: 20px;
+  background-color: ;
+}
+
+.landing .section2 {
+  color: white;
+  text-align: left;
+  padding-top: 50px;
+  padding-left: 50px;
+  height: 400px;
+  background-image: url('/MosEisley.png');
+}
+.landing .section3 {
+  background-color: ;
+  height: ;
+}
+
+.landing .aboutus {
+}
+
+.landing .faq {
+}
+
+/* Shop page */
 .shop {
 }
 .shop img {
   height: 200px;
+}
+.shop img:hover {
+  cursor: pointer;
 }
 
 .shop .flexcontainer {
@@ -79,6 +123,27 @@
   -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.75);
   box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.75);
+}
+
+.shop .name {
+  font-size: 24px;
+}
+.shop .name:hover {
+  cursor: pointer;
+}
+
+.shop .description {
+  font-style: italic;
+}
+.shop input {
+  width: 80px;
+  margin-right: 5px;
+  align-self: center;
+  font-weight: normal;
+}
+.shop .price {
+  margin: -10px -10px -10px 0px;
+  text-align: left;
 }
 
 /* single product page */
@@ -107,6 +172,11 @@
   border-bottom: 60px solid transparent;
 
   border-left: 60px solid #621b00;
+}
+
+.pageright:hover,
+.pageleft:hover {
+  cursor: pointer;
 }
 
 .imagecontainer {
@@ -154,6 +224,7 @@
   margin-left: auto;
   margin-right: auto;
   font-size: 18px;
+  height: 100vh;
 }
 
 .cart .price {
@@ -192,6 +263,13 @@
   font-size: 20px;
   font-weight: bold;
 }
+
+.cart .removebutton {
+  align-self: flex-start;
+}
+.cart input {
+  width: 40px;
+}
 .cart .priceandsubtotal {
   text-align: right;
   display: flex;
@@ -216,7 +294,27 @@
 
 .total {
   margin-top: 30px;
+  margin-bottom: 30px;
   font-size: 36px;
+}
+.cartsummary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.checkoutbutton {
+  align-self: center;
+  text-align: center;
+  font-size: 30px;
+  border: 5px solid #fca311;
+  color: #fca311;
+  border-radius: 6px;
+  padding: 0.2em;
+  margin: 40px 0;
+}
+.checkoutbutton:hover {
+  border: 5px solid #621b00;
+  color: #621b00;
 }
 
 /* footer */

@@ -7,7 +7,8 @@ export default function NavBar() {
     <div className={styles.nav}>
       <Link href="/">
         <a>
-          <img src={'/logo.jpg'}></img> JAWA Merch
+          <img src={'/logo.jpg'} alt="logo" className={styles.logo}></img> JAWA
+          Merch
         </a>
       </Link>
       <Link href="/">
@@ -17,9 +18,7 @@ export default function NavBar() {
         <a>Products</a>
       </Link>
       <Link href="/cart">
-        <a>
-          Cart <img src="" alt="" />
-        </a>
+        <a>Cart</a>
       </Link>
       <Link href="/checkout">
         <a>Checkout</a>

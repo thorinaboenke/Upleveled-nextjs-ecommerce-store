@@ -9,11 +9,10 @@ export default function Products() {
   return (
     <>
       <Head>
-        <title>Droids Droids Droids</title>
+        <title>JAWA Merch - Shop</title>
       </Head>
       <Layout>
         <h1>Shop</h1>
-        <h2>All products</h2>
         <div className={styles.shop}>
           <div className={styles.flexcontainer}>
             <div>
@@ -26,9 +25,12 @@ export default function Products() {
                       </Link>
                     </div>
                     <Link href={`/products/${product.id}`}>
-                      <a>{product.name}</a>
+                      <a className={styles.name}>{product.name}</a>
                     </Link>{' '}
-                    {product.description} {product.price} credits
+                    <div className={styles.description}>
+                      {product.description}
+                    </div>
+                    <div className={styles.price}>{product.price} credits</div>
                     <AddToCart id={product.id} />
                   </div>
                 );

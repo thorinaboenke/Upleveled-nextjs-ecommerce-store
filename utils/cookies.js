@@ -1,6 +1,6 @@
 import cookie from 'js-cookie';
 
-export function getCartfromCookies() {
+export function getCartFromCookies() {
   const cart = cookie.getJSON('cart') || [];
   return cart;
 }
@@ -8,7 +8,7 @@ export function getCartfromCookies() {
 export function addAmountToCartInCookie(id, quantity) {
   // the id and quantity (as integer) are passed to the function
   // get the old cart from the Cookies
-  const cart = getCartfromCookies();
+  const cart = getCartFromCookies();
   let newCart;
   // first check if the cart exists (length) and the id is aleady in, filter will return true, then to make the new cart, map over existing cart, and where the id is the same as passed in, increase amount by the quantity
   // otherwise, cart is empty or does not contain the item yet, push item to new cart
@@ -32,14 +32,14 @@ export function addAmountToCartInCookie(id, quantity) {
 export function updateAmountInCartInCookie(id, quantity) {
   // the id and quantity (as integer) are passed to the function
   // get the old cart from the Cookies
-  const cart = getCartfromCookies();
+  const cart = getCartFromCookies();
   let newCart;
-  // first check if the cart exists (length) and the id is aleady in, filter will return true, then to make the new cart, map over existing cart, and where the id is the same as passed in, increase amount by the quantity
+  // first check if the cart exists (length) and the id is aleady in, filter will return true, then to make the new cart, map over existing cart, and where the id is the same as passed in, update amount to the new value
   // otherwise, cart is empty or does not contain the item yet, push item to new cart
   if (cart.length !== 0 && cart.find((item) => item.id === id)) {
     //console.log(cart);
     newCart = cart.map((item) =>
-      item.id !== id ? item : { ...item, amount: quantity },
+      item.id !== id ? item : { ...item, amount: parseInt(quantity) },
     );
   } else if (cart.length !== 0) {
     newCart = [...cart];
@@ -53,16 +53,17 @@ export function updateAmountInCartInCookie(id, quantity) {
   return newCart;
 }
 
-export function removeItemfromCartInCookies(id) {
-  const cart = getCartfromCookies();
+export function removeItemFromCartInCookie(id) {
+  const cart = getCartFromCookies();
   let newCart;
   // do the stuff to remove the item here
-  cookie.set('cart', newCart);
+
   if (cart.length !== 0) {
     newCart = cart.filter((item) => item.id !== id);
   } else {
     newCart = cart;
   }
+  cookie.set('cart', newCart);
   return newCart;
 }
 
@@ -71,7 +72,7 @@ export function calculateTotalItemsInCart(cart) {
     return 0;
   }
   const totalItems = cart.reduce((acc, curr) => {
-    return acc + curr.amount;
+    return acc + parseInt(curr.amount);
   }, 0);
   return totalItems;
 }
