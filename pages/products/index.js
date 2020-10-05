@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
@@ -16,9 +16,6 @@ export default function Products(props) {
 
   function handleSortChange(e) {
     e.preventDefault();
-    setValue(e.currentTarget.value);
-    setSort(e.currentTarget.value);
-    console.log(e.currentTarget.value);
     const val = e.currentTarget.value;
     setAllProducts(() => sortProducts(allProducts, val));
   }
@@ -39,8 +36,9 @@ export default function Products(props) {
   }
 
   function handleSearchChange(e) {
-    setSearch(value);
-    console.log(search);
+    const all = [...products];
+    e.preventDefault();
+    setAllProducts(searchProducts(all, inputSearch.current.value));
   }
 
   function searchProducts(all, searchParam) {
@@ -50,6 +48,7 @@ export default function Products(props) {
     );
     return searchedProducts;
   }
+  const inputSearch = useRef('bluu ');
 
   return (
     <>
@@ -72,12 +71,16 @@ export default function Products(props) {
             <option value={'des'}>Price, descending</option>
             <option value={'abc'}>alphabetical</option>
           </select>
+          <br />
           <label htmlFor="filter">Search: </label>
           <input
-            id="filter"
+            ref={inputSearch}
             type="text"
+            id="filter"
             placeholder="search by keyword, for example 'medical'"
           ></input>
+
+          <button onClick={(e) => handleSearchChange(e)}>Search</button>
           <div className={styles.flexcontainer}>
             <div>
               {allProducts.map((product) => {
