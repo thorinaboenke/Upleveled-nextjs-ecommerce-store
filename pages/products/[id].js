@@ -5,22 +5,23 @@ import Layout from '../../components/Layout';
 import AddToCart from '../../components/AddToCart';
 import nextCookies from 'next-cookies';
 import Link from 'next/link';
+import { getCartFromCookies } from '../../utils/cookies';
 // cart data structure
 //[{id: '1', amount : 0},{id: '1', amount : 0}]
 
 export default function Product(props) {
-  // const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(props.cartFromCookies);
 
-  function getNext(id, products) {
+  function getNext(id, prod) {
     if (id === '1') {
-      return '' + products.length;
+      return '' + prod.length;
     }
     const next = parseInt(id) - 1;
     return '' + next;
   }
 
-  function getPrev(id, products) {
-    if (id == products.length) {
+  function getPrev(id, prod) {
+    if (id === prod.length) {
       return 1 + '';
     } else {
       return parseInt(id) + 1 + '';
@@ -29,9 +30,6 @@ export default function Product(props) {
   const next = getNext(props.id, products);
   const prev = getPrev(props.id, products);
 
-  console.log(typeof next, next);
-  console.log(typeof prev, prev);
-
   const product = products.find((currentProduct) => {
     if (currentProduct.id === props.id) {
       return true;
@@ -39,7 +37,7 @@ export default function Product(props) {
   });
 
   return (
-    <Layout>
+    <Layout cart={cart}>
       <Link href={`/products/${prev}`}>
         <div className={styles.pageleft}></div>
       </Link>
@@ -53,14 +51,17 @@ export default function Product(props) {
         <div className={styles.producttitle}>{product.name}</div>
         <div className={styles.productdescription}>{product.description}</div>
         <div className={styles.price}>{product.price} Credits</div>
-        <AddToCart id={product.id} />
+        <AddToCart id={product.id} setCart={setCart} />
       </div>
     </Layout>
   );
 }
 
 export function getServerSideProps(context) {
+  const allCookies = nextCookies(context);
+  const cartFromCookies = allCookies.cart || [];
+  console.log(cartFromCookies);
   return {
-    props: { id: context.query.id },
+    props: { id: context.query.id, cartFromCookies: cartFromCookies },
   };
 }

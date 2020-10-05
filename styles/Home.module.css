@@ -91,6 +91,17 @@
   height: ;
 }
 
+.planetcontainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.planet {
+  margin: 7px;
+}
+
 .landing .aboutus {
 }
 
@@ -315,6 +326,17 @@
 .checkoutbutton:hover {
   border: 5px solid #621b00;
   color: #621b00;
+}
+
+/* checkoutpage */
+
+.checkoutimg {
+  width: 150px;
+  margin-bottom: 20px;
+}
+
+.inlineblock {
+  display: inline-block;
 }
 
 /* footer */

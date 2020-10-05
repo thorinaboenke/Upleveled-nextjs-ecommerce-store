@@ -13,14 +13,8 @@ export default function Cart({ cart, setCart }) {
   const shippingFee = 49;
   const minOrderValue = 499;
 
-  //const [cart, setCart] = useState(getCartFromCookies());
-
-  // useEffect(() => {
-  //   setCart(getCartFromCookies());
-  // }, []);
-
-  function calculateTotal(cart) {
-    const total = cart.reduce((acc, curr) => {
+  function calculateTotal(cartForTotal) {
+    const total = cartForTotal.reduce((acc, curr) => {
       return (
         acc +
         curr.amount *

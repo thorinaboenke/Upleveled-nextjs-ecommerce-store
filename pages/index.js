@@ -1,7 +1,16 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import Layout from '../components/Layout';
+import Planets from '../components/Planets';
 import styles from '../styles/Home.module.css';
+import { useContext } from 'react';
+import { getCartFromCookies } from '../utils/cookies';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+
+const planetClient = new ApolloClient({
+  uri: 'https://my-starwars-api.herokuapp.com/',
+  cache: new InMemoryCache(),
+});
 
 export default function Home() {
   return (
@@ -32,6 +41,9 @@ export default function Home() {
             <h2>
               Shipping to the whole galaxy, including all outer rim territories
             </h2>
+            <ApolloProvider client={planetClient}>
+              <Planets />
+            </ApolloProvider>
           </div>
         </div>
       </Layout>

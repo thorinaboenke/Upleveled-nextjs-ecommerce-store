@@ -12,8 +12,9 @@ export default function thankyou() {
       </Head>
       <Layout>
         <h1>Thank you for your purchase</h1>
+        <img src="/head.png" alt="jawa head"></img>
         <Link href="/products">
-          <a>Back to Store</a>
+          <a className={styles.checkoutbutton}>Back to Store</a>
         </Link>
       </Layout>
     </div>

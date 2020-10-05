@@ -2,28 +2,23 @@ import styles from '../styles/Home.module.css';
 import { useState } from 'react';
 import { addToCart } from '../functions.js';
 import { addAmountToCartInCookie } from '../utils/cookies.js';
+import { getCartFromCookies } from '../utils/cookies';
 
 export default function AddToCart(props) {
-  //console.log(typeof props.id, props.id);
   const [quantity, setQuantity] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
   const handleChange = (e) => {
     setQuantity(e.target.value);
   };
-
- 
 
   function handleAddtoCart(e) {
     e.preventDefault();
     const id = props.id;
     const quant = quantity;
     console.log(typeof id, id, quant);
-    setIsLoading(true);
     // here stuff has to happen with the cookie:
     addAmountToCartInCookie(id, parseInt(quant));
-    setIsLoading(false);
     setQuantity('1');
-    //console.log(id, quant);
+    props.setCart(getCartFromCookies());
   }
 
   return (
@@ -41,5 +36,3 @@ export default function AddToCart(props) {
     </div>
   );
 }
-
-export function getServerSideProps(context) {}

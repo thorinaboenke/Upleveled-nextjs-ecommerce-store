@@ -5,7 +5,7 @@
 export const products = [
   {
     id: '1',
-    name: 'C3-PO',
+    name: 'C-3PO',
     description:
       'Protocol droid intended to assist in etiquette, customs, and translation',
     price: 100,
@@ -21,7 +21,7 @@ export const products = [
   {
     id: '3',
     name: 'BB8',
-    description: 'Astromech droid,  ',
+    description: 'Astromech droid',
     price: 350,
     imgUrl: '/BB8.png',
   },
@@ -35,7 +35,8 @@ export const products = [
   {
     id: '5',
     name: 'Droideka',
-    description: 'Destroyer droid with twin blasters and own shield generators',
+    description:
+      'Destroyer droid equipped with twin blasters and own shield generators',
     price: 450,
     imgUrl: '/droideka.png',
   },
@@ -43,7 +44,7 @@ export const products = [
     id: '6',
     name: 'Battle Droid',
     description:
-      'Trade Federation standard battle droid - Discounts on bulk order.',
+      'Trade Federation standard battle droid - Discount on bulk orders',
     price: 120,
     imgUrl: '/battledroid.jpg',
   },
@@ -64,7 +65,7 @@ export const products = [
   {
     id: '9',
     name: 'D-L-K',
-    description: 'unknown build, unknown origin - mostly scrap metal',
+    description: 'Droid of unknown build, unknown origin - mostly scrap metal',
     price: 15,
     imgUrl: '/dalek.jpg',
   },

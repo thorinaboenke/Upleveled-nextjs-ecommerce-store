@@ -1,8 +1,11 @@
 import { urlObjectKeys } from 'next/dist/next-server/lib/utils';
+import { useState } from 'react';
 import Link from 'next/link';
 import styles from '../styles/Home.module.css';
+import { calculateTotalItemsInCart } from '../utils/cookies';
+import { getCartFromCookies } from '../utils/cookies';
 
-export default function NavBar() {
+export default function NavBar({ cart }) {
   return (
     <div className={styles.nav}>
       <Link href="/">
@@ -20,9 +23,23 @@ export default function NavBar() {
       <Link href="/cart">
         <a>Cart</a>
       </Link>
+      <span>{calculateTotalItemsInCart(cart)}</span>
+      <img src="/shoppingcart.svg" alt="cart" height="40px"></img>
+
       <Link href="/checkout">
         <a>Checkout</a>
       </Link>
     </div>
   );
+}
+
+export function getServerSideProps(context) {
+  const allCookies = nextCookies(context);
+  const cartFromCookies = allCookies.cart || [];
+  console.log(cartFromCookies);
+  return {
+    props: {
+      cartFromCookies: cartFromCookies,
+    },
+  };
 }

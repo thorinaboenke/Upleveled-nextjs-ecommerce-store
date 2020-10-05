@@ -68,7 +68,7 @@ export function removeItemFromCartInCookie(id) {
 }
 
 export function calculateTotalItemsInCart(cart) {
-  if (cart.length < 1) {
+  if (cart.length === 0) {
     return 0;
   }
   const totalItems = cart.reduce((acc, curr) => {

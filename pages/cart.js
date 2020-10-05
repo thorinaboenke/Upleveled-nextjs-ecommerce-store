@@ -21,7 +21,7 @@ export default function cart(props) {
       <Head>
         <title>JAWA Merch - Shopping Cart</title>
       </Head>
-      <Layout>
+      <Layout cart={cart}>
         <h1>Shopping Cart</h1>
         <Cart cart={cart} setCart={setCart} />
       </Layout>
