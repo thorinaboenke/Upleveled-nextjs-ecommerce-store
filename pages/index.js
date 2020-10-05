@@ -1,25 +1,27 @@
+import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Layout from '../components/Layout';
 import Planets from '../components/Planets';
 import styles from '../styles/Home.module.css';
-import { useContext } from 'react';
 import { getCartFromCookies } from '../utils/cookies';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import nextCookies from 'next-cookies';
 
 const planetClient = new ApolloClient({
   uri: 'https://my-starwars-api.herokuapp.com/',
   cache: new InMemoryCache(),
 });
 
-export default function Home() {
+export default function Home(props) {
+  const [cart] = useState(props.cartFromCookies);
   return (
     <>
       <Head>
         <title>Jawa Merch</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
+      <Layout cart={cart}>
         <div className={styles.landing}>
           <h1 className={styles.heading}>
             We have the droids you're looking for!
@@ -49,4 +51,15 @@ export default function Home() {
       </Layout>
     </>
   );
+}
+
+export function getServerSideProps(context) {
+  const allCookies = nextCookies(context);
+  const cartFromCookies = allCookies.cart || [];
+  console.log(cartFromCookies);
+  return {
+    props: {
+      cartFromCookies: cartFromCookies,
+    },
+  };
 }

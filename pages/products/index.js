@@ -9,6 +9,46 @@ import nextCookies from 'next-cookies';
 
 export default function Products(props) {
   const [cart, setCart] = useState(props.cartFromCookies);
+  const [allProducts, setAllProducts] = useState(products);
+  const [sort, setSort] = useState('none');
+  const [search, setSearch] = useState(' ');
+  const [value, setValue] = useState('');
+
+  function handleSortChange(e) {
+    e.preventDefault();
+    setValue(e.currentTarget.value);
+    setSort(e.currentTarget.value);
+    console.log(e.currentTarget.value);
+    const val = e.currentTarget.value;
+    setAllProducts(() => sortProducts(allProducts, val));
+  }
+
+  function sortProducts(all, sortParam) {
+    const copyAll = [...all];
+    if (sortParam === 'none') return products;
+    if (sortParam === 'asc')
+      return copyAll.sort((a, b) => {
+        return a.price - b.price;
+      });
+    if (sortParam === 'des')
+      return copyAll.sort((a, b) => {
+        return b.price - a.price;
+      });
+  }
+
+  function handleSearchChange(e) {
+    setSearch(value);
+    console.log(search);
+  }
+
+  function searchProducts(all, searchParam) {
+    //filter does not mutate
+    const searchedProducts = all.filter((product) =>
+      product.description.includes(searchParam),
+    );
+    return searchedProducts;
+  }
+
   return (
     <>
       <Head>
@@ -17,9 +57,27 @@ export default function Products(props) {
       <Layout cart={cart}>
         <h1>Shop</h1>
         <div className={styles.shop}>
+          <label htmlFor="sort">Sort by: </label>
+          <select
+            id="sort"
+            onChange={(e) => {
+              handleSortChange(e);
+            }}
+            defaultValue={value}
+          >
+            <option value={'none'}>no sort</option>
+            <option value={'asc'}>Price, ascending</option>
+            <option value={'des'}>Price, descending</option>
+          </select>
+          <label htmlFor="filter">Search: </label>
+          <input
+            id="filter"
+            type="text"
+            placeholder="search by keyword, for example 'medical'"
+          ></input>
           <div className={styles.flexcontainer}>
             <div>
-              {products.map((product) => {
+              {allProducts.map((product) => {
                 return (
                   <div key={product.id} className={styles.productcard}>
                     <div>
