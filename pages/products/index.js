@@ -34,6 +34,8 @@ export default function Products(props) {
       return copyAll.sort((a, b) => {
         return b.price - a.price;
       });
+    if (sortParam === 'abc')
+      return copyAll.sort((a, b) => (a.name > b.name ? 1 : -1));
   }
 
   function handleSearchChange(e) {
@@ -68,6 +70,7 @@ export default function Products(props) {
             <option value={'none'}>no sort</option>
             <option value={'asc'}>Price, ascending</option>
             <option value={'des'}>Price, descending</option>
+            <option value={'abc'}>alphabetical</option>
           </select>
           <label htmlFor="filter">Search: </label>
           <input
