@@ -29,18 +29,16 @@ const MyCheckbox = ({ children, ...props }) => {
 const MyTextField = ({ label, ...props }) => {
   const [field, meta, helpers] = useField(props);
   return (
-    <>
-      <div className={styles.inlineblock}>
-        <label>{label}</label>
-        <br />
-        <input {...field} {...props} />
+    <div className={styles.inlineblock}>
+      <label>{label}</label>
+      <br />
+      <input {...field} {...props} />
 
-        {meta.touched && meta.error ? (
-          <div className="error">{meta.error}</div>
-        ) : null}
-        <br />
-      </div>
-    </>
+      {meta.touched && meta.error ? (
+        <div className="error">{meta.error}</div>
+      ) : null}
+      <br />
+    </div>
   );
 };
 
@@ -164,11 +162,13 @@ const FormikCheckout = () => (
               label="CVV No."
             />
           </div>
-          <MyCheckbox name="acceptedTerms">
-            I accept the terms and conditions
-          </MyCheckbox>
-          <button type="Complete Purchase" disabled={isSubmitting}>
-            Submit
+          <div className={styles.acceptterms}>
+            <MyCheckbox name="acceptedTerms">
+              I accept the terms and conditions
+            </MyCheckbox>
+          </div>
+          <button type="submit" disabled={isSubmitting}>
+            Complete Purchase
           </button>
         </Form>
       )}

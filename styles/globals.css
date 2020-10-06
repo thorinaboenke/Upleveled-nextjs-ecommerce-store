@@ -18,3 +18,9 @@ a {
 li {
   list-style-type: none;
 }
+
+.error {
+  color: #e7531b;
+  font-style: italic;
+  font-size: 14px;
+}

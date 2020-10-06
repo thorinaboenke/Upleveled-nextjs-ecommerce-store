@@ -357,9 +357,45 @@
   min-height: 100px;
   display: flex;
   align-items: flex-start;
+  flex-wrap: wrap;
 }
 
 .checkoutHeading {
+  font-size: 24px;
+  font-style: italic;
+  margin: 1em 0;
+  padding-top: 1em;
+  border-top: 2px solid #621b00;
+}
+.checkoutform {
+  margin-bottom: 100px;
+}
+
+.acceptterms {
+  min-height: 50px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.checkform input {
+  min-height: 3em;
+  margin: 1em 1em 0 1em;
+  margin-left: 0;
+}
+
+.checkform button {
+  font-size: 24px;
+  border: 3px solid #932d06;
+  color: #932d06;
+  background-color: white;
+  border-radius: 6px;
+  padding: 0.2em;
+  margin-bottom: 2em;
+}
+.checkform button:hover {
+  border: 3px solid #621b00;
+  color: #621b00;
 }
 
 /* footer */

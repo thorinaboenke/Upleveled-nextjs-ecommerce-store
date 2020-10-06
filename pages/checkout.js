@@ -4,18 +4,8 @@ import styles from '../styles/Home.module.css';
 import Link from 'next/link';
 import Layout from '../components/Layout';
 import FormikCheckout from '../components/FormikCheckout';
-import { getCartFromCookies } from '../utils/cookies';
 import nextCookies from 'next-cookies';
 import * as Yup from 'yup';
-
-import {
-  Formik,
-  Field,
-  Form,
-  useField,
-  FieldArray,
-  ErrorMessage,
-} from 'formik';
 
 export default function checkout(props) {
   const [cart, setCart] = useState(props.cartFromCookies);
@@ -23,7 +13,7 @@ export default function checkout(props) {
 
   if (cart.length > 0) {
     return (
-      <div>
+      <>
         <Head>
           <title>JAWA Merch - Checkout</title>
         </Head>
@@ -34,9 +24,11 @@ export default function checkout(props) {
             alt="bb8"
             className={styles.checkoutimg}
           ></img>
-          <FormikCheckout />
+          <div className={styles.checkform}>
+            <FormikCheckout />
+          </div>
         </Layout>
-      </div>
+      </>
     );
   } else {
     return (
