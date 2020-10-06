@@ -10,13 +10,15 @@
   "dependencies": {
     "@apollo/client": "^3.2.2",
     "dotenv": "^8.2.0",
+    "formik": "^2.1.7",
     "graphql": "^15.3.0",
     "js-cookie": "^2.2.1",
     "next": "9.5.3",
     "next-cookies": "^2.0.3",
     "postgres": "^1.0.2",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "yup": "^0.29.3"
   },
   "devDependencies": {
     "@types/react": "16.8.24",

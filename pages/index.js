@@ -26,23 +26,23 @@ export default function Home(props) {
           <h1 className={styles.heading}>
             We have the droids you're looking for!
           </h1>
-          <Link href="/products">
-            <a className={styles.checkoutbutton}>All products</a>
-          </Link>
+          <img className={styles.peek} src="/peek.png" alt=""></img>
           <div className={styles.section1}>
+            <h3>High quality second hand droids</h3>
             <h2>
-              High quality second hand droids - Everything from astromech,
-              protocol, maintenance to construction, medical, scouts, mining,
-              security and pre-clone war military grade antiques
+              Everything from astromech, protocol, maintenance to construction,
+              medical, scouts, mining, security and pre-clone war military grade
+              antiques
             </h2>
+            <Link href="/products">
+              <a className={styles.checkoutbutton}>All products</a>
+            </Link>
           </div>
           <div className={styles.section2}>
             <h2>Branches in Mos Eisley, Mos Espa and Freetown</h2>
           </div>
           <div className={styles.section3}>
-            <h2>
-              Shipping to the whole galaxy, including all outer rim territories
-            </h2>
+            <h2>Shipping to the whole galaxy</h2>
             <ApolloProvider client={planetClient}>
               <Planets />
             </ApolloProvider>

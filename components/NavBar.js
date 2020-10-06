@@ -24,7 +24,7 @@ export default function NavBar({ cart }) {
         <a>Cart</a>
       </Link>
       <span>{calculateTotalItemsInCart(cart)}</span>
-      <img src="/shoppingcart.svg" alt="cart" height="40px"></img>
+      <img src="/cart.svg" alt="cart" height="20px"></img>
 
       <Link href="/checkout">
         <a>Checkout</a>

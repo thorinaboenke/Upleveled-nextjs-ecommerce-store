@@ -10,8 +10,6 @@ import nextCookies from 'next-cookies';
 export default function Products(props) {
   const [cart, setCart] = useState(props.cartFromCookies);
   const [allProducts, setAllProducts] = useState(products);
-  const [sort, setSort] = useState('none');
-  const [search, setSearch] = useState(' ');
   const [value, setValue] = useState('');
 
   function handleSortChange(e) {
@@ -43,12 +41,14 @@ export default function Products(props) {
 
   function searchProducts(all, searchParam) {
     //filter does not mutate
-    const searchedProducts = all.filter((product) =>
-      product.description.includes(searchParam),
+    const searchedProducts = all.filter(
+      (product) =>
+        product.description.toLowerCase().includes(searchParam.toLowerCase()) ||
+        product.name.toLowerCase().includes(searchParam.toLowerCase()),
     );
     return searchedProducts;
   }
-  const inputSearch = useRef('bluu ');
+  const inputSearch = useRef(' ');
 
   return (
     <>
@@ -77,7 +77,7 @@ export default function Products(props) {
             ref={inputSearch}
             type="text"
             id="filter"
-            placeholder="search by keyword, for example 'medical'"
+            placeholder="keyword"
           ></input>
 
           <button onClick={(e) => handleSearchChange(e)}>Search</button>

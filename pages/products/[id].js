@@ -5,14 +5,13 @@ import Layout from '../../components/Layout';
 import AddToCart from '../../components/AddToCart';
 import nextCookies from 'next-cookies';
 import Link from 'next/link';
-import { getCartFromCookies } from '../../utils/cookies';
 // cart data structure
 //[{id: '1', amount : 0},{id: '1', amount : 0}]
 
 export default function Product(props) {
   const [cart, setCart] = useState(props.cartFromCookies);
 
-  function getNext(id, prod) {
+  function getPrev(id, prod) {
     if (id === '1') {
       return '' + prod.length;
     }
@@ -20,8 +19,8 @@ export default function Product(props) {
     return '' + next;
   }
 
-  function getPrev(id, prod) {
-    if (id === prod.length) {
+  function getNext(id, prod) {
+    if (parseInt(id) === prod.length) {
       return 1 + '';
     } else {
       return parseInt(id) + 1 + '';
