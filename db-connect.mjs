@@ -16,11 +16,11 @@ const sql = postgres();
 //where username, password and database are the respective names for the database to connect)
 
 // here retireve the information from the table and save it in a variable
-const flowers = await sql`
-SELECT * from flowers;
+const products = await sql`
+SELECT * from products;
 `;
 
-console.log(users);
+console.log(products);
 process.exit(0);
 
 // run this scrip from the console with

@@ -3,13 +3,12 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
 import styles from '../../styles/Home.module.css';
-import { products } from '../../utils/database';
 import AddToCart from '../../components/AddToCart';
 import nextCookies from 'next-cookies';
 
 export default function Products(props) {
   const [cart, setCart] = useState(props.cartFromCookies);
-  const [allProducts, setAllProducts] = useState(products);
+  const [allProducts, setAllProducts] = useState(props.products);
   const [value, setValue] = useState('');
 
   function handleSortChange(e) {
@@ -88,7 +87,7 @@ export default function Products(props) {
                   <div key={product.id} className={styles.productcard}>
                     <div>
                       <Link href={`/products/${product.id}`}>
-                        <img src={product.imgUrl} alt=""></img>
+                        <img src={product.url} alt=""></img>
                       </Link>
                     </div>
                     <Link href={`/products/${product.id}`}>
@@ -110,13 +109,16 @@ export default function Products(props) {
   );
 }
 
-export function getServerSideProps(context) {
+export async function getServerSideProps(context) {
+  const { getProducts } = await import('../../utils/database.js');
+  const products = await getProducts();
   const allCookies = nextCookies(context);
   const cartFromCookies = allCookies.cart || [];
-  console.log(cartFromCookies);
+  console.log(products);
   return {
     props: {
       cartFromCookies: cartFromCookies,
+      products,
     },
   };
 }

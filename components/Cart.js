@@ -1,17 +1,15 @@
 import { useState, useEffect } from 'react';
-import cookie from 'js-cookie';
-import { products } from '../utils/database';
 import styles from '../styles/Home.module.css';
 import Link from 'next/link';
 import { calculateTotalItemsInCart } from '../utils/cookies';
-import { addAmountToCartInCookie } from '../utils/cookies';
 import { removeItemFromCartInCookie } from '../utils/cookies';
 import { updateAmountInCartInCookie } from '../utils/cookies';
 import { getCartFromCookies } from '../utils/cookies';
 
-export default function Cart({ cart, setCart }) {
+export default function Cart({ cart, setCart, databaseproducts }) {
   const shippingFee = 49;
   const minOrderValue = 499;
+  const products = databaseproducts;
 
   function calculateTotal(cartForTotal) {
     const total = cartForTotal.reduce((acc, curr) => {
@@ -43,8 +41,9 @@ export default function Cart({ cart, setCart }) {
                   <img
                     alt=""
                     src={
-                      products.filter((product) => product.id === item.id)[0]
-                        .imgUrl
+                      products.filter(
+                        (product) => product.id === parseInt(item.id),
+                      ).url
                     }
                     style={{ height: '100px' }}
                   />
@@ -52,8 +51,9 @@ export default function Cart({ cart, setCart }) {
                 <div className={styles.nameandquant}>
                   <div className={styles.name}>
                     {
-                      products.filter((product) => product.id === item.id)[0]
-                        .name
+                      products.filter(
+                        (product) => product.id === parseInt(item.id),
+                      ).name
                     }
                   </div>
 
@@ -82,16 +82,16 @@ export default function Cart({ cart, setCart }) {
                 <div className={styles.priceandsubtotal}>
                   <div>
                     {
-                      products.filter((product) => product.id === item.id)[0]
-                        .price
+                      products.filter(
+                        (product) => product.id === parseInt(item.id)
+                      ).price
                     }
                   </div>
                   <div className={styles.subtotal}>
                     Subtotal:{' '}
                     {item.amount *
                       parseInt(
-                        products.filter((product) => product.id === item.id)[0]
-                          .price,
+                        products.filter((product) => product.id === item.id)).price,
                       )}
                   </div>
                 </div>
