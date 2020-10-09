@@ -10,8 +10,8 @@ export default function NavBar({ cart }) {
     <div className={styles.nav}>
       <Link href="/">
         <a>
-          <img src={'/logo.jpg'} alt="logo" className={styles.logo}></img> JAWA
-          Merch
+          <img src={'/logo.jpg'} alt="jawa-logo" className={styles.logo}></img>{' '}
+          JAWA Merch
         </a>
       </Link>
       <Link href="/">
@@ -21,10 +21,13 @@ export default function NavBar({ cart }) {
         <a>Products</a>
       </Link>
       <Link href="/cart">
-        <a>Cart</a>
+        <a>
+          <div aria-label="total items in cart">
+            {`    ` + calculateTotalItemsInCart(cart)}
+          </div>
+          <img src="/cart.svg" alt="cart" height="20px"></img>
+        </a>
       </Link>
-      <span>{calculateTotalItemsInCart(cart)}</span>
-      <img src="/cart.svg" alt="cart" height="20px"></img>
 
       <Link href="/checkout">
         <a>Checkout</a>

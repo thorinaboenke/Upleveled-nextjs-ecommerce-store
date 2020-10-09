@@ -33,7 +33,7 @@ export default function Products(props) {
   }
 
   function handleSearchChange(e) {
-    const all = [...products];
+    const all = [...props.products];
     e.preventDefault();
     setAllProducts(searchProducts(all, inputSearch.current.value));
   }

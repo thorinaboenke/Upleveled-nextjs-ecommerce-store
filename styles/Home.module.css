@@ -88,6 +88,7 @@
   position: absolute;
   right: 0;
   top: 350px;
+  z-index: -1;
 }
 
 .landing .section2 {
@@ -96,7 +97,7 @@
   padding-top: 50px;
   padding-left: 10%;
   height: 400px;
-  background-image: url('/MosEisley.png');
+  background-image: url('../public/MosEisley.png');
 }
 
 .landing .section3 {
@@ -123,6 +124,7 @@
 }
 
 /* Shop page */
+
 .shop {
 }
 .shop img {
@@ -327,20 +329,6 @@
   flex-direction: column;
   align-items: flex-end;
 }
-.checkoutbutton {
-  align-self: center;
-  text-align: center;
-  font-size: 30px;
-  border: 5px solid #932d06;
-  color: #932d06;
-  border-radius: 6px;
-  padding: 0.2em;
-  margin: 40px 0;
-}
-.checkoutbutton:hover {
-  border: 5px solid #621b00;
-  color: #621b00;
-}
 
 /* checkoutpage */
 
@@ -378,24 +366,14 @@
   flex-direction: column;
 }
 
-.checkform input {
+/* .checkform input {
   min-height: 3em;
   margin: 1em 1em 0 1em;
   margin-left: 0;
-}
+} */
 
-.checkform button {
-  font-size: 24px;
-  border: 3px solid #932d06;
-  color: #932d06;
-  background-color: white;
-  border-radius: 6px;
-  padding: 0.2em;
-  margin-bottom: 2em;
-}
-.checkform button:hover {
-  border: 3px solid #621b00;
-  color: #621b00;
+.checkform input {
+  margin-bottom: 1em;
 }
 
 /* footer */

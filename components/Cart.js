@@ -43,7 +43,7 @@ export default function Cart({ cart, setCart, databaseproducts }) {
                     src={
                       products.filter(
                         (product) => product.id === parseInt(item.id),
-                      ).url
+                      )[0].url
                     }
                     style={{ height: '100px' }}
                   />
@@ -53,7 +53,7 @@ export default function Cart({ cart, setCart, databaseproducts }) {
                     {
                       products.filter(
                         (product) => product.id === parseInt(item.id),
-                      ).name
+                      )[0].name
                     }
                   </div>
 
@@ -83,15 +83,16 @@ export default function Cart({ cart, setCart, databaseproducts }) {
                   <div>
                     {
                       products.filter(
-                        (product) => product.id === parseInt(item.id)
-                      ).price
+                        (product) => product.id === parseInt(item.id),
+                      )[0].price
                     }
                   </div>
                   <div className={styles.subtotal}>
                     Subtotal:{' '}
                     {item.amount *
                       parseInt(
-                        products.filter((product) => product.id === item.id)).price,
+                        products.filter((product) => product.id === item.id)[0]
+                          .price,
                       )}
                   </div>
                 </div>
@@ -118,7 +119,7 @@ export default function Cart({ cart, setCart, databaseproducts }) {
         <div className={styles.cartsummary}>
           <div>Items: {calculateTotalItemsInCart(cart)}</div>
           <Link href="./checkout">
-            <a className={styles.checkoutbutton}>Go to Checkout</a>
+            <button className="checkoutbutton">Go to Checkout</button>
           </Link>
         </div>
       </div>
@@ -126,9 +127,9 @@ export default function Cart({ cart, setCart, databaseproducts }) {
   } else {
     return (
       <>
-        <div>Your Cart is empty</div>
+        <h2>Your Cart is empty</h2>
         <Link href={'/'}>
-          <div className={styles.checkoutbutton}>Back to Store</div>
+          <button className="checkoutbutton">Back to Store</button>
         </Link>
       </>
     );

@@ -3,9 +3,8 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import Link from 'next/link';
 import Layout from '../components/Layout';
-import FormikCheckout from '../components/FormikCheckout';
+import Checkout from '../components/Checkout';
 import nextCookies from 'next-cookies';
-import * as Yup from 'yup';
 
 export default function checkout(props) {
   const [cart, setCart] = useState(props.cartFromCookies);
@@ -24,8 +23,8 @@ export default function checkout(props) {
             alt="bb8"
             className={styles.checkoutimg}
           ></img>
-          <div className={styles.checkform}>
-            <FormikCheckout />
+          <div className="checkform">
+            <Checkout />
           </div>
         </Layout>
       </>
@@ -38,9 +37,9 @@ export default function checkout(props) {
         </Head>
         <Layout cart={cart}>
           <h1>Checkout</h1>
-          <h1>Your Cart is empty</h1>
+          <h2>Your Cart is empty</h2>
           <Link href={'/'}>
-            <div className={styles.checkoutbutton}>Back to Store</div>
+            <button className="checkoutbutton">Back to Store</button>
           </Link>
         </Layout>
       </>

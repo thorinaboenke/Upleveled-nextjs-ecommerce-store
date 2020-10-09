@@ -24,3 +24,112 @@ li {
   font-style: italic;
   font-size: 14px;
 }
+
+label {
+  font-weight: bold;
+  display: flex;
+  margin-bottom: 5px;
+}
+
+input + label {
+  font-weight: bold;
+  display: inline-flex;
+  margin-right: 20px;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password'],
+textarea,
+select {
+  display: block;
+  width: 300px;
+  min-width: 200px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  /* margin-bottom: 20px; */
+}
+
+.checkform {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+.checkform input {
+  margin-right: 12px;
+}
+.checkform label {
+  margin-bottom: 0px;
+}
+.checkform button {
+}
+
+.form-container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 400px;
+  background-color: #f8f5f4;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 36px;
+  border-radius: 5px;
+}
+.form-control,
+.button-control {
+  margin-bottom: 20px;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.login-button,
+.signup-button,
+.checkoutbutton,
+.purchasebutton {
+  font-size: 16px;
+  min-width: 100px;
+  color: #fff !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: #621b00;
+  padding: 20px;
+  border-radius: 5px;
+  display: block;
+  border: none;
+  transition: all 0.4s ease 0s;
+  align-self: center;
+}
+
+.login-button:hover,
+.signup-button:hover,
+.checkoutbutton:hover,
+.purchasebutton:hover {
+  background: #e49d29;
+  letter-spacing: 1px;
+  -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
+  transition: all 0.4s ease 0s;
+  align-self: center;
+}
+
+.instructions {
+  text-align: left;
+  max-width: 300px;
+  margin-top: 2em;
+  font-size: 14px;
+  align-self: center;
+}
+
+.instructions a {
+  text-decoration: underline;
+}

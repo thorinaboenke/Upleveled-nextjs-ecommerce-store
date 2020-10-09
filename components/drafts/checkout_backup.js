@@ -2,8 +2,8 @@ import { useState } from 'react';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import Link from 'next/link';
-import Layout from '../components/Layout';
-import { getCartFromCookies } from '../utils/cookies';
+import Layout from '../Layout';
+import { getCartFromCookies } from '../../utils/cookies';
 import nextCookies from 'next-cookies';
 
 export default function checkout(props) {

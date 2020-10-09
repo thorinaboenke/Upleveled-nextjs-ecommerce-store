@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from '../styles/Home.module.css';
 import * as Yup from 'yup';
+import FormikControl from './formik/FormikControl';
 
 import {
   Formik,
@@ -65,9 +66,7 @@ const FormikCheckout = () => (
         lastName: Yup.string()
           .max(40, 'Must be 40 characters or less')
           .required('Required'),
-        email: Yup.string()
-          .email('Invalid email addresss`')
-          .required('Required'),
+        email: Yup.string().email('Invalid email address').required('Required'),
         acceptedTerms: Yup.boolean()
           .required('Required')
           .oneOf([true], 'You must accept the terms and conditions.'),
@@ -93,21 +92,24 @@ const FormikCheckout = () => (
         <Form>
           <div className={styles.checkoutHeading}>Contact Information</div>
           <div className={styles.checkoutSection}>
-            <MyTextField
+            <FormikControl
+              control="input"
               type="text"
               name="firstName"
               placeholder="Luke"
               label="First Name"
             />
 
-            <MyTextField
+            <FormikControl
+              control="input"
               type="text"
               name="lastName"
               placeholder="Skywalker"
               label="Last Name"
             />
 
-            <MyTextField
+            <FormikControl
+              control="input"
               type="email"
               name="email"
               placeholder="usetheforce@luke.com"
@@ -116,25 +118,29 @@ const FormikCheckout = () => (
           </div>
           <div className={styles.checkoutHeading}>Shipping</div>
           <div className={styles.checkoutSection}>
-            <MyTextField
+            <FormikControl
+              control="input"
               type="text"
               name="address"
               placeholder="Address"
               label="Address"
             />
-            <MyTextField
+            <FormikControl
+              control="input"
               type="text"
               name="zipCode"
               placeholder="ZIP Code"
               label="ZIP Code"
             />
-            <MyTextField
+            <FormikControl
+              control="input"
               type="text"
               name="city"
               placeholder="City"
               label="City"
             />
-            <MyTextField
+            <FormikControl
+              control="input"
               type="text"
               name="country"
               placeholder="Country"
@@ -143,19 +149,22 @@ const FormikCheckout = () => (
           </div>
           <div className={styles.checkoutHeading}>Payment Details</div>
           <div className={styles.checkoutSection}>
-            <MyTextField
+            <FormikControl
+              control="input"
               type="text"
               name="creditCardNumber"
               placeholder=""
               label="Card No."
             />
-            <MyTextField
+            <FormikControl
+              control="input"
               type="text"
               name="expiryDate"
               placeholder="YY/MM"
               label="Expiry Date"
             />
-            <MyTextField
+            <FormikControl
+              control="input"
               type="text"
               name="cvv"
               placeholder="CVV"
@@ -167,9 +176,15 @@ const FormikCheckout = () => (
               I accept the terms and conditions
             </MyCheckbox>
           </div>
-          <button type="submit" disabled={isSubmitting}>
-            Complete Purchase
-          </button>
+          <div className="button-control">
+            <button
+              className="purchasebutton"
+              type="submit"
+              disabled={isSubmitting}
+            >
+              Complete Purchase
+            </button>
+          </div>
         </Form>
       )}
     </Formik>

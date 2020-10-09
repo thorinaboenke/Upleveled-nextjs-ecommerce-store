@@ -35,7 +35,7 @@ export default function Home(props) {
               antiques
             </h2>
             <Link href="/products">
-              <a className={styles.checkoutbutton}>All products</a>
+              <button className="checkoutbutton">All products</button>
             </Link>
           </div>
           <div className={styles.section2}>

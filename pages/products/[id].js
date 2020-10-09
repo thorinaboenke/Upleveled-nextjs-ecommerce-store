@@ -10,29 +10,29 @@ import Link from 'next/link';
 export default function Product(props) {
   const [cart, setCart] = useState(props.cartFromCookies);
   const products = props.products;
+  //make array with all the avaiable product ids
+  const allProductIds = products.map((product) => product.id);
 
-  // function getPrev(id, prod) {
-  //   if (id === '1') {
-  //     return '' + prod.length;
-  //   }
-  //   const next = parseInt(id) - 1;
-  //   return '' + next;
-  // }
+  function getPrev(id, allProductIds) {
+    if (id === '1') {
+      return '' + allProductIds.length;
+    }
+    const next = parseInt(id) - 1;
+    return '' + next;
+  }
 
-  // function getNext(id, prod) {
-  //   if (parseInt(id) === prod.length) {
-  //     return 1 + '';
-  //   } else {
-  //     return parseInt(id) + 1 + '';
-  //   }
-  // }
-  // const next = getNext(props.id, products);
-  // const prev = getPrev(props.id, products);
-  const next = 3;
-  const prev = 3;
+  function getNext(id, allProductIds) {
+    if (parseInt(id) === allProductIds.length) {
+      return 1 + '';
+    } else {
+      return parseInt(id) + 1 + '';
+    }
+  }
+
+  const next = getNext(props.index, allProductIds);
+  const prev = getPrev(props.index, allProductIds);
 
   const product = props.product;
-  console.log(product);
 
   if (!props.product) {
     return (
@@ -71,12 +71,16 @@ export default function Product(props) {
 
 export async function getServerSideProps(context) {
   const { getProductById } = await import('../../utils/database.js');
-  const product = await getProductById(context.query.id);
-  console.log(product);
+  const { getProducts } = await import('../../utils/database.js');
+  const products = await getProducts();
+  const allProductIds = products.map((product) => product.id);
+  const product = await getProductById(allProductIds[context.query.id - 1]);
+
   const allCookies = nextCookies(context);
   const cartFromCookies = allCookies.cart || [];
-  console.log(cartFromCookies);
   const props = {};
+  props.index = context.query.id;
+  props.products = products;
   props.cartFromCookies = cartFromCookies;
   if (product) props.product = product;
 
