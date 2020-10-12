@@ -11,9 +11,12 @@ export default function NavBar({ cart }) {
       <Link href="/">
         <a>
           <img src={'/logo.jpg'} alt="jawa-logo" className={styles.logo}></img>{' '}
+          <div className={styles.shopname}>
           JAWA Merch
+          </div>
         </a>
       </Link>
+      <div className={styles.links}>
       <Link href="/">
         <a>Home</a>
       </Link>
@@ -32,6 +35,7 @@ export default function NavBar({ cart }) {
       <Link href="/checkout">
         <a>Checkout</a>
       </Link>
+      </div>
     </div>
   );
 }
