@@ -11,6 +11,7 @@ export default function Products(props) {
   const [allProducts, setAllProducts] = useState(props.products);
   const [value, setValue] = useState('');
 
+  // set all products to a sorted list of the current allProducts
   function handleSortChange(e) {
     e.preventDefault();
     const val = e.currentTarget.value;
@@ -19,7 +20,7 @@ export default function Products(props) {
 
   function sortProducts(all, sortParam) {
     const copyAll = [...all];
-    if (sortParam === 'none') return products;
+    if (sortParam === 'none') return all;
     if (sortParam === 'asc')
       return copyAll.sort((a, b) => {
         return a.price - b.price;
@@ -32,10 +33,16 @@ export default function Products(props) {
       return copyAll.sort((a, b) => (a.name > b.name ? 1 : -1));
   }
 
+  // set all products: running the search function with the sort function nested inside
   function handleSearchChange(e) {
     const all = [...props.products];
     e.preventDefault();
-    setAllProducts(searchProducts(all, inputSearch.current.value));
+    setAllProducts(
+      searchProducts(
+        sortProducts(all, inputSort.current.value),
+        inputSearch.current.value,
+      ),
+    );
   }
 
   function searchProducts(all, searchParam) {
@@ -47,7 +54,10 @@ export default function Products(props) {
     );
     return searchedProducts;
   }
+
+  //use ref on inputs to persist between renders
   const inputSearch = useRef(' ');
+  const inputSort = useRef(' ');
 
   return (
     <>
@@ -57,8 +67,10 @@ export default function Products(props) {
       <Layout cart={cart}>
         <h1>Shop</h1>
         <div className={styles.shop}>
+          <div>
           <label htmlFor="sort">Sort by: </label>
           <select
+            ref={inputSort}
             id="sort"
             onChange={(e) => {
               handleSortChange(e);
@@ -73,15 +85,20 @@ export default function Products(props) {
           <br />
           <label htmlFor="filter">Search: </label>
           <input
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleSearchChange(e);
+            }}
             ref={inputSearch}
             type="text"
             id="filter"
             placeholder="keyword"
           ></input>
+          </div>
 
           <button onClick={(e) => handleSearchChange(e)}>Search</button>
-          <div className={styles.flexcontainer}>
-            <div>
+          <div className={styles.outerflexcontainer}>
+          
+            
               {allProducts.map((product) => {
                 return (
                   <div key={product.id} className={styles.productcard}>
@@ -101,7 +118,8 @@ export default function Products(props) {
                   </div>
                 );
               })}
-            </div>
+              
+            
           </div>
         </div>
       </Layout>

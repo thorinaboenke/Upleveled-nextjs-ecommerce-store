@@ -56,8 +56,7 @@ export function updateAmountInCartInCookie(id, quantity) {
 export function removeItemFromCartInCookie(id) {
   const cart = getCartFromCookies();
   let newCart;
-  // do the stuff to remove the item here
-
+  // filter the card for all items that to NOT have the ID
   if (cart.length !== 0) {
     newCart = cart.filter((item) => item.id !== id);
   } else {

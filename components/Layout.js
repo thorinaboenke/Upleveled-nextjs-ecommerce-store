@@ -11,8 +11,13 @@ export default function Layout({ children, cart }) {
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <div className={styles.bodyflexbox}>
       <Header cart={cart}></Header>
       <main className={styles.main}>{children}</main>
+      <div className={styles.footer}>
+      <Footer/>
+      </div>
+      </div>
     </>
   );
 }

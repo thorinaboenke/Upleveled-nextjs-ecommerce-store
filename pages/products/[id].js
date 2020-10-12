@@ -12,20 +12,21 @@ export default function Product(props) {
   const products = props.products;
   //make array with all the avaiable product ids
   const allProductIds = products.map((product) => product.id);
-
-  function getPrev(id, allProductIds) {
-    if (id === '1') {
-      return '' + allProductIds.length;
+  //the index in the url acceses the id in the array of ids of the products on the server side
+  // the pagination functions get the index url from the current index and the length of the array of ids
+  function getPrev(index, ArrayOfIds) {
+    if (index === '1') {
+      return '' + ArrayOfIds.length;
     }
-    const next = parseInt(id) - 1;
+    const next = parseInt(index) - 1;
     return '' + next;
   }
 
-  function getNext(id, allProductIds) {
-    if (parseInt(id) === allProductIds.length) {
+  function getNext(index, ArrayOfIds) {
+    if (parseInt(index) === ArrayOfIds.length) {
       return 1 + '';
     } else {
-      return parseInt(id) + 1 + '';
+      return parseInt(index) + 1 + '';
     }
   }
 
@@ -43,7 +44,7 @@ export default function Product(props) {
           </div>
         </div>
         <Link href={'/'}>
-          <div className={styles.checkoutbutton}>Back to Store</div>
+          <button className={styles.checkoutbutton}>Back to Store</button>
         </Link>
       </Layout>
     );

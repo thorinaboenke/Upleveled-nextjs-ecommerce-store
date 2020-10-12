@@ -8,6 +8,7 @@
 
 .main {
   margin-top: 80px;
+  margin-bottom: 200px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -126,6 +127,13 @@
 /* Shop page */
 
 .shop {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.shop button {
+  margin: 1em;
 }
 .shop img {
   height: 200px;
@@ -134,22 +142,29 @@
   cursor: pointer;
 }
 
-.shop .flexcontainer {
+.outerflexcontainer {
+  width: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  max-width: 1000px;
-  /* background-color: lightblue; */
+  justify-content: space-around;
 }
+
 .shop .productcard {
+  display: flex;
+  flex-direction: column;
   width: 300px;
   /* background-color: yellow; */
-  min-height: 400px;
+  min-height: 420px;
   padding: 2rem;
-  margin: 1rem;
+  margin: 2rem 2rem;
   -webkit-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.75);
   box-shadow: 10px 10px 20px -1px rgba(0, 0, 0, 0.75);
+}
+
+.shop .credits {
+  margin-top: auto;
 }
 
 .shop .name {
@@ -169,7 +184,7 @@
   font-weight: normal;
 }
 .shop .price {
-  margin: -10px -10px -10px 0px;
+  margin: auto -10px -10px 0px;
   text-align: left;
 }
 
@@ -376,19 +391,6 @@
   margin-bottom: 1em;
 }
 
-/* footer */
-.footer {
-  position: fixed;
-  bottom: 0;
-  background-color: #fca311;
-  width: 100%;
-  height: 80px;
-  border-top: 1px solid #eaeaea;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .grid {
   display: flex;
   align-items: center;
@@ -438,4 +440,52 @@
     width: 100%;
     flex-direction: column;
   }
+}
+
+.bodyflexbox {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.footer {
+  margin-top: auto;
+}
+
+footer .upper {
+  background-color: #f5f0ee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2em 10% 2em 10%;
+}
+
+.upper a {
+  padding: 0.5em 0;
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+}
+
+.lower {
+  color: #ebe0dc;
+  background-color: #2b0f04;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: space-between;
+
+  padding: 1em 0;
+  font-size: 12px;
+}
+.terms {
+  display: flex;
+  width: 400px;
+  justify-content: space-between;
+}
+.socialmedia {
+  height: 32px;
+  margin: 4px;
 }
