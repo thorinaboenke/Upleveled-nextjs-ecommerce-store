@@ -10,7 +10,7 @@ const products = [
   {
     id: '2',
     name: 'R2D2',
-    description: 'Astromech droid for machanic and co-pilot duties',
+    description: 'Astromech droid for mechanic and co-pilot duties',
     price: 200,
     url: '/R2D2.png',
   },
@@ -69,7 +69,7 @@ const products = [
 
 exports.up = async (sql) => {
   await sql`
-	INSERT INTO products ${sql(products, 'name', 'description', 'price', 'url')};	
+	INSERT INTO products ${sql(products, 'name', 'description', 'price', 'url')};
 	`;
 };
 

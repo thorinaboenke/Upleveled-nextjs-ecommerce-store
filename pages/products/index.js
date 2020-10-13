@@ -68,58 +68,54 @@ export default function Products(props) {
         <h1>Shop</h1>
         <div className={styles.shop}>
           <div>
-          <label htmlFor="sort">Sort by: </label>
-          <select
-            ref={inputSort}
-            id="sort"
-            onChange={(e) => {
-              handleSortChange(e);
-            }}
-            defaultValue={value}
-          >
-            <option value={'none'}>no sort</option>
-            <option value={'asc'}>Price, ascending</option>
-            <option value={'des'}>Price, descending</option>
-            <option value={'abc'}>alphabetical</option>
-          </select>
-          <br />
-          <label htmlFor="filter">Search: </label>
-          <input
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') handleSearchChange(e);
-            }}
-            ref={inputSearch}
-            type="text"
-            id="filter"
-            placeholder="keyword"
-          ></input>
+            <label htmlFor="sort">Sort by: </label>
+            <select
+              ref={inputSort}
+              id="sort"
+              onChange={(e) => {
+                handleSortChange(e);
+              }}
+              defaultValue={value}
+            >
+              <option value={'none'}>no sort</option>
+              <option value={'asc'}>Price, ascending</option>
+              <option value={'des'}>Price, descending</option>
+              <option value={'abc'}>alphabetical</option>
+            </select>
+            <br />
+            <label htmlFor="filter">Search: </label>
+            <input
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') handleSearchChange(e);
+              }}
+              ref={inputSearch}
+              type="text"
+              id="filter"
+              placeholder="keyword"
+            ></input>
           </div>
 
           <button onClick={(e) => handleSearchChange(e)}>Search</button>
           <div className={styles.outerflexcontainer}>
-          
-            
-              {allProducts.map((product) => {
-                return (
-                  <div key={product.id} className={styles.productcard}>
-                    <div>
-                      <Link href={`/products/${product.id}`}>
-                        <img src={product.url} alt=""></img>
-                      </Link>
-                    </div>
+            {allProducts.map((product) => {
+              return (
+                <div key={product.id} className={styles.productcard}>
+                  <div>
                     <Link href={`/products/${product.id}`}>
-                      <a className={styles.name}>{product.name}</a>
-                    </Link>{' '}
-                    <div className={styles.description}>
-                      {product.description}
-                    </div>
-                    <div className={styles.price}>{product.price} credits</div>
-                    <AddToCart id={product.id} setCart={setCart} />
+                      <img src={product.url} alt=""></img>
+                    </Link>
                   </div>
-                );
-              })}
-              
-            
+                  <Link href={`/products/${product.id}`}>
+                    <a className={styles.name}>{product.name}</a>
+                  </Link>{' '}
+                  <div className={styles.description}>
+                    {product.description}
+                  </div>
+                  <div className={styles.price}>{product.price} credits</div>
+                  <AddToCart id={product.id} setCart={setCart} />
+                </div>
+              );
+            })}
           </div>
         </div>
       </Layout>

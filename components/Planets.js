@@ -22,7 +22,7 @@ export default function Planets(props) {
   return (
     <div className={styles.planetcontainer}>
       {data.allPlanets.planets.map((planet) =>
-        planet.name === 'unknown' | 'Alderaan' ? null : (
+        (planet.name === 'unknown') | 'Alderaan' ? null : (
           <div key={planet.id} className={styles.planet}>
             {planet.name}
           </div>

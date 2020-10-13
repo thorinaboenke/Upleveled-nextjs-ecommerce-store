@@ -4,14 +4,18 @@ import Layout from '../../components/Layout';
 import AddToCart from '../../components/AddToCart';
 import nextCookies from 'next-cookies';
 import Link from 'next/link';
-// cart data structure
-//[{id: '1', amount : 0},{id: '1', amount : 0}]
+import FormikControl from '../../components/formik/FormikControl';
+import { Formik, Form } from 'formik';
 
 export default function Product(props) {
   const [cart, setCart] = useState(props.cartFromCookies);
+  const [leaveReview, setLeaveReview] = useState(false);
+  const [isInReviewEditMode, setIsInReviewEditMode] = useState(false);
   const products = props.products;
   //make array with all the avaiable product ids
   const allProductIds = products.map((product) => product.id);
+  const reviewsByProductId = props.reviewsByProductId;
+  console.log('byId', reviewsByProductId);
   //the index in the url acceses the id in the array of ids of the products on the server side
   // the pagination functions get the index url from the current index and the length of the array of ids
   function getPrev(index, ArrayOfIds) {
@@ -32,8 +36,28 @@ export default function Product(props) {
 
   const next = getNext(props.index, allProductIds);
   const prev = getPrev(props.index, allProductIds);
-
   const product = props.product;
+
+  async function onSubmit(values) {
+    console.log('Form data', values);
+    console.log('Form data', values.rating);
+    setLeaveReview(!leaveReview);
+
+    const response = await fetch(`/api/reviews`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        review: {
+          productId: values.productId,
+          rating: values.rating,
+          reviewText: values.reviewText,
+        },
+      }),
+    });
+    const newReview = (await response.json()).review;
+  }
 
   if (!props.product) {
     return (
@@ -65,23 +89,83 @@ export default function Product(props) {
         <div className={styles.productdescription}>{product.description}</div>
         <div className={styles.price}>{product.price} Credits</div>
         <AddToCart id={product.id} setCart={setCart} />
+        {!leaveReview && (
+          <button onClick={() => setLeaveReview(!leaveReview)}>
+            Leave a review
+          </button>
+        )}
+        {leaveReview && (
+          <div>
+            <Formik
+              initialValues={{
+                productId: product.id,
+                rating: '',
+                reviewText: '',
+              }}
+              onSubmit={onSubmit}
+            >
+              {(formik) => (
+                <Form>
+                  <FormikControl
+                    control="input"
+                    type="number"
+                    min={1}
+                    max={5}
+                    name="rating"
+                    label="Rating (1-5)"
+                  />
+                  <FormikControl
+                    control="textarea"
+                    name="reviewText"
+                    label="Your review"
+                  />
+                  <button type="submit">Send</button>
+                </Form>
+              )}
+            </Formik>
+            <button onClick={() => setLeaveReview(!leaveReview)}>Cancel</button>
+          </div>
+        )}
+      </div>
+      <div>
+        Average Rating:{' '}
+        {Number(
+          reviewsByProductId.reduce((acc, curr) => {
+            return acc + curr.rating;
+          }, 0) / reviewsByProductId.length,
+        ).toFixed(1)}
+      </div>
+      <div>Reviews</div>
+      <div>
+        {reviewsByProductId.map((rev) => {
+          return (
+            <div id={rev.reviewId}>
+              <div>{rev.rating}/5 Stars</div>
+              <div>{rev.reviewText}</div>
+            </div>
+          );
+        })}
       </div>
     </Layout>
   );
 }
 
 export async function getServerSideProps(context) {
+  const { getReviewsByProductId } = await import('../../utils/database.js');
   const { getProductById } = await import('../../utils/database.js');
   const { getProducts } = await import('../../utils/database.js');
   const products = await getProducts();
   const allProductIds = products.map((product) => product.id);
   const product = await getProductById(allProductIds[context.query.id - 1]);
-
+  const reviewsByProductId = await getReviewsByProductId(
+    allProductIds[context.query.id - 1],
+  );
   const allCookies = nextCookies(context);
   const cartFromCookies = allCookies.cart || [];
   const props = {};
   props.index = context.query.id;
   props.products = products;
+  props.reviewsByProductId = reviewsByProductId;
   props.cartFromCookies = cartFromCookies;
   if (product) props.product = product;
 

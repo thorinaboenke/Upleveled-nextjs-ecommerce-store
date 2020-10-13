@@ -123,3 +123,52 @@ export async function addProduct() {}
 //   }
 // }
 // }
+
+export async function getReviews() {
+  const allReviews = await sql`
+  SELECT * from reviews;`;
+  return allReviews.map((r) => camelcaseKeys(r));
+}
+
+export async function getReviewsByProductId(p_id) {
+  const allReviews = await sql`
+  SELECT * from reviews WHERE product_id = ${p_id};`;
+  return allReviews.map((r) => camelcaseKeys(r));
+}
+
+export async function getReviewByProductId(p_id) {
+  if (!/^\d+$/.test(p_id)) return undefined;
+  const reviewsByProductId = sql`
+  SELECT * from reviews WHERE product_id = ${p_id}`;
+  return reviewsByProductId;
+}
+export async function getReviewByUserId(u_id) {
+  if (!/^\d+$/.test(u_id)) return undefined;
+  const reviewsByUserId = sql`
+  SELECT * from reviews WHERE user_id = ${u_id}`;
+  return reviewsByUserId;
+}
+
+export async function insertReview(review) {
+  // const requiredProperties = ['productId', 'rating', 'reviewText'];
+  // const reviewProperties = Object.keys(review);
+
+  // if (reviewProperties.length !== requiredProperties.length) {
+  //   return undefined;
+  // }
+
+  // const difference = reviewProperties.filter(
+  //   (prop) => !requiredProperties.includes(prop),
+  // );
+  // if (difference.length > 0) {
+  //   return undefined;
+  // }
+
+  const reviews = await sql`
+INSERT INTO reviews
+(product_id, rating, review_text )
+VALUES
+(${review.productId}, ${review.rating},${review.reviewText})
+RETURNING *;`;
+  return reviews.map((r) => camelcaseKeys(r))[0];
+}

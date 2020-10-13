@@ -1,15 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Head from 'next/head';
-import styles from '../styles/Home.module.css';
-import Link from 'next/link';
+
 import Layout from '../components/Layout';
 import nextCookies from 'next-cookies';
 import Cart from '../components/Cart';
-import { getCartFromCookies } from '../utils/cookies';
+import { ProductCart, ProductList } from '../utils/types';
+import { GetServerSidePropsContext } from 'next';
 
-export default function cart(props) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [cart, setCart] = useState(props.cartFromCookies);
+type CartProps = {
+  cartFromCookies: ProductCart;
+  products: ProductList;
+};
+export default function cart(props: CartProps) {
+  const [shoppingcart, setShoppingcart] = useState(props.cartFromCookies);
   const products = props.products;
 
   return (
@@ -17,15 +20,19 @@ export default function cart(props) {
       <Head>
         <title>JAWA Merch - Shopping Cart</title>
       </Head>
-      <Layout cart={cart}>
+      <Layout cart={shoppingcart}>
         <h1>Shopping Cart</h1>
-        <Cart cart={cart} setCart={setCart} databaseproducts={products} />
+        <Cart
+          cart={shoppingcart}
+          setCart={setShoppingcart}
+          databaseproducts={products}
+        />
       </Layout>
     </div>
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { getProducts } = await import('../utils/database');
   const products = await getProducts();
   const allCookies = nextCookies(context);

@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import styles from '../styles/Home.module.css';
 import Link from 'next/link';
-import { calculateTotalItemsInCart } from '../utils/cookies';
-import { removeItemFromCartInCookie } from '../utils/cookies';
-import { updateAmountInCartInCookie } from '../utils/cookies';
-import { getCartFromCookies } from '../utils/cookies';
+import { calculateTotalItemsInCart } from '../utils/cookies.tsx';
+import { removeItemFromCartInCookie } from '../utils/cookies.tsx';
+import { updateAmountInCartInCookie } from '../utils/cookies.tsx';
+import { getCartFromCookies } from '../utils/cookies.tsx';
 
 export default function Cart({ cart, setCart, databaseproducts }) {
   const shippingFee = 49;
@@ -15,8 +15,7 @@ export default function Cart({ cart, setCart, databaseproducts }) {
     const total = cartForTotal.reduce((acc, curr) => {
       return (
         acc +
-        curr.amount *
-          products.filter((product) => product.id === curr.id)[0].price
+        curr.amount * products.find((product) => product.id === curr.id).price
       );
     }, 0);
     return total;
@@ -51,9 +50,9 @@ export default function Cart({ cart, setCart, databaseproducts }) {
                 <div className={styles.nameandquant}>
                   <div className={styles.name}>
                     {
-                      products.filter(
+                      products.find(
                         (product) => product.id === parseInt(item.id),
-                      )[0].name
+                      ).name
                     }
                   </div>
 
@@ -79,19 +78,20 @@ export default function Cart({ cart, setCart, databaseproducts }) {
                     </button>
                   </div>
                 </div>
+                <div className={styles.placeholder}></div>
                 <div className={styles.priceandsubtotal}>
                   <div>
                     {
-                      products.filter(
+                      products.find(
                         (product) => product.id === parseInt(item.id),
-                      )[0].price
+                      ).price
                     }
                   </div>
                   <div className={styles.subtotal}>
                     Subtotal:{' '}
                     {item.amount *
                       parseInt(
-                        products.filter((product) => product.id === item.id)[0]
+                        products.find((product) => product.id === item.id)
                           .price,
                       )}
                   </div>

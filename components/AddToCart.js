@@ -1,8 +1,8 @@
 import styles from '../styles/Home.module.css';
 import { useState } from 'react';
 import { addToCart } from '../functions.js';
-import { addAmountToCartInCookie } from '../utils/cookies.js';
-import { getCartFromCookies } from '../utils/cookies';
+import { addAmountToCartInCookie } from '../utils/cookies.tsx';
+import { getCartFromCookies } from '../utils/cookies.tsx';
 
 export default function AddToCart(props) {
   const [quantity, setQuantity] = useState(1);
@@ -10,11 +10,10 @@ export default function AddToCart(props) {
     setQuantity(e.target.value);
   };
 
-  function handleAddtoCart(e) {
+  function handleAddToCart(e) {
     e.preventDefault();
     const id = props.id;
     const quant = quantity;
-    console.log(typeof id, id, quant);
     // here stuff has to happen with the cookie:
     addAmountToCartInCookie(id, parseInt(quant));
     setQuantity('1');
@@ -23,7 +22,7 @@ export default function AddToCart(props) {
 
   return (
     <div>
-      <form onSubmit={(e) => handleAddtoCart(e)}>
+      <form onSubmit={(e) => handleAddToCart(e)}>
         <input
           type="number"
           min="1"
