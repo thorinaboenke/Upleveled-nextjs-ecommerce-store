@@ -135,7 +135,6 @@ select {
 }
 
 .radio-choice {
-  background-color: plum;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -143,6 +142,5 @@ select {
 }
 
 .radio-choice-outer-wrapper {
-  background-color: plum;
   display: flex;
 }

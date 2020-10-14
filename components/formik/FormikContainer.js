@@ -3,7 +3,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import FormikControl from './FormikControl';
 
-export default function FormikContainer() {
+export default function Formikcontainer() {
   const paymentOptions = [
     {
       key: 'Select an option',

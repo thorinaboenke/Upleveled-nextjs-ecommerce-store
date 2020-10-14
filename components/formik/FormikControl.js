@@ -1,23 +1,23 @@
 import React from 'react';
-import FormikInput from './Formikinput';
-import FormikTextarea from './Formiktextarea';
-import FormikSelect from './Formikselect';
-import FormikRadio from './Formikradio';
-import FormikCheckbox from './Formikcheckbox';
+import Formikinput from './Formikinput';
+import Formiktextarea from './Formiktextarea';
+import Formikselect from './Formikselect';
+import Formikradio from './Formikradio';
+import Formikcheckbox from './Formikcheckbox';
 // dicides which form fields have to be rendered based on one particular prop:
 function FormikControl(props) {
   const { control, ...rest } = props;
   switch (control) {
     case 'input':
-      return <FormikInput {...rest} />;
+      return <Formikinput {...rest} />;
     case 'textarea':
-      return <FormikTextarea {...rest} />;
+      return <Formiktextarea {...rest} />;
     case 'select':
-      return <FormikSelect {...rest} />;
+      return <Formikselect {...rest} />;
     case 'radio':
-      return <FormikRadio {...rest} />;
+      return <Formikradio {...rest} />;
     case 'checkbox':
-      return <FormikCheckbox {...rest} />;
+      return <Formikcheckbox {...rest} />;
     case 'date':
     default:
       return null;

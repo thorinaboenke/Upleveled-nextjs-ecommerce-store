@@ -2,7 +2,7 @@ import React from 'react';
 import { Field, ErrorMessage } from 'formik';
 import TextError from './TextError';
 
-export default function FormikTextarea(props) {
+export default function Formiktextarea(props) {
   const { label, name, ...rest } = props;
   return (
     <div className="form-control">

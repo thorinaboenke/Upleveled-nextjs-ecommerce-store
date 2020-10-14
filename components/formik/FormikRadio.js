@@ -9,7 +9,7 @@ function Formikradio(props) {
       <div className="form-control">
         <label>{label}</label>
         <div className="radio-choice-outer-wrapper">
-          <Field name={name}>
+          <Field name={name} {...rest}>
             {({ field }) => {
               return options.map((option) => {
                 return (
@@ -22,7 +22,7 @@ function Formikradio(props) {
                         {...field}
                         {...rest}
                         value={option.value}
-                        checked={field.value === option.value}
+                        // checked={field.value === option.value}
                       />
                     </div>
                   </React.Fragment>

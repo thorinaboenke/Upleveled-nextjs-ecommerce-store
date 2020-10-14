@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from '../../styles/Home.module.css';
 import Layout from '../../components/Layout';
 import AddToCart from '../../components/AddToCart';
@@ -11,11 +11,20 @@ import Review from '../../components/Review';
 export default function Product(props) {
   const [cart, setCart] = useState(props.cartFromCookies);
   const [leaveReview, setLeaveReview] = useState(false);
+  const [showMore, setShowMore] = useState(false);
+  const [edited, setEdited] = useState(false);
+  const [reviewsByProductId, setReviewsByProductId] = useState(
+    props.reviewsByProductId,
+  );
+
+  const [loading, setLoading] = useState(false);
+
   const products = props.products;
   //make array with all the avaiable product ids
   const allProductIds = products.map((product) => product.id);
-  const reviewsByProductId = props.reviewsByProductId;
-  console.log('byId', reviewsByProductId);
+  // const reviewsByProductId = props.reviewsByProductId;
+  const numberOfReviewsToShow = showMore ? reviewsByProductId.length : 3;
+
   //the index in the url acceses the id in the array of ids of the products on the server side
   // the pagination functions get the index url from the current index and the length of the array of ids
   function getPrev(index, ArrayOfIds) {
@@ -55,8 +64,6 @@ export default function Product(props) {
   };
 
   async function onSubmit(values) {
-    console.log('Form data', values);
-    console.log('Form data', values.rating);
     setLeaveReview(!leaveReview);
 
     const response = await fetch(`/api/reviews`, {
@@ -76,23 +83,23 @@ export default function Product(props) {
   }
   const radioOptions = [
     {
-      key: '1',
+      key: 1,
       value: 1,
     },
     {
-      key: '2',
+      key: 2,
       value: 2,
     },
     {
-      key: '3',
+      key: 3,
       value: 3,
     },
     {
-      key: '4',
+      key: 4,
       value: 4,
     },
     {
-      key: '5',
+      key: 5,
       value: 5,
     },
   ];
@@ -142,7 +149,6 @@ export default function Product(props) {
                 initialValues={{
                   productId: product.id,
                   rating: '',
-                  rating2: '',
                   reviewText: '',
                 }}
                 onSubmit={onSubmit}
@@ -150,17 +156,9 @@ export default function Product(props) {
                 {(formik) => (
                   <Form>
                     <FormikControl
-                      control="input"
-                      type="number"
-                      min={1}
-                      max={5}
-                      name="rating"
-                      label="Rating (1-5)"
-                    />
-                    <FormikControl
                       control="radio"
-                      name="rating2"
-                      label="Give a rating (1-5)"
+                      name="rating"
+                      label="Rating"
                       options={radioOptions}
                     />
                     <FormikControl
@@ -180,13 +178,23 @@ export default function Product(props) {
 
           {!reviewsByProductId && <div>Reviews</div>}
           <div className={styles.reviewscontainer}>
-            {reviewsByProductId.map((rev) => {
+            {reviewsByProductId.slice(0, numberOfReviewsToShow).map((rev) => {
               return (
                 <div id={rev.reviewId} className={styles.singlereviewcontainer}>
-                  <Review rev={rev} />
+                  <Review
+                    rev={rev}
+                    edited={edited}
+                    setEdited={setEdited}
+                    setReviewsByProductId={setReviewsByProductId}
+                  />
                 </div>
               );
             })}
+            {reviewsByProductId.length > 3 && (
+              <button onClick={() => setShowMore(!showMore)}>
+                {showMore ? 'Show less' : 'Show more'}
+              </button>
+            )}
           </div>
         </div>
       </div>

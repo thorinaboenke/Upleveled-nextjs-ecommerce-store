@@ -245,6 +245,7 @@
 .singleproductcontainer {
   margin-left: 110px;
   margin-right: 110px;
+  max-width: 640px;
   max-width: 80% vh;
 }
 

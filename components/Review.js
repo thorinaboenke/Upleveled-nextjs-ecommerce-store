@@ -1,18 +1,32 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../styles/Home.module.css';
-function Review({ rev }) {
+
+function Review({ rev, edited, setEdited, setReviewsByProductId, setLoading }) {
   const [text, setText] = useState(rev.reviewText);
   const [rating, setRating] = useState(rev.rating);
   const [editReview, setEditReview] = useState(false);
 
-  const inputRating = useRef(rev.rating);
-  const inputText = useRef(rev.reviewText);
+  const outputRatingAsStars = (r) => {
+    let output = '';
+    const filledStar = '★';
+    const emptyStar = '☆';
+    for (let i = 0; i < r; i++) {
+      output += filledStar;
+    }
+    for (let i = 0; i < 5 - r; i++) {
+      output += emptyStar;
+    }
+    return output;
+  };
   return (
     <>
       {!editReview ? (
-        <div>{rev.rating}/5 Stars</div>
+        <div aria-label={rev.rating + 'out of 5 stars'}>
+          {outputRatingAsStars(rev.rating)}
+        </div>
       ) : (
         <input
+          aria-label="edit rating"
           type="number"
           min={1}
           max={5}
@@ -24,6 +38,7 @@ function Review({ rev }) {
         <div>{rev.reviewText}</div>
       ) : (
         <input
+          aria-label="edit rating text"
           type="text"
           defaultValue={rev.reviewText}
           onChange={(e) => setText(e.currentTarget.value)}
@@ -32,10 +47,13 @@ function Review({ rev }) {
       <div className={styles.editbuttons}>
         {editReview && (
           <button
+            aria-label="delete review"
             onClick={async () => {
+              setLoading(true);
               await fetch(`/api/reviews/${rev.reviewId}`, {
                 method: 'DELETE',
               });
+              setLoading(false);
             }}
           >
             Delete

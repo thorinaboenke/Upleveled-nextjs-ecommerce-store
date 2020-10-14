@@ -2,7 +2,7 @@ import React from 'react';
 import { Field, ErrorMessage } from 'formik';
 import TextError from './TextError';
 
-export default function FormikInput(props) {
+export default function Formikinput(props) {
   const { label, name, ...rest } = props;
 
   return (

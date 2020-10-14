@@ -24,6 +24,7 @@ export default function AddToCart(props) {
     <div>
       <form onSubmit={(e) => handleAddToCart(e)}>
         <input
+          aria-label="Quantity to add to cart"
           type="number"
           min="1"
           placeholder="quantity"
