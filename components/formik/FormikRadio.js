@@ -2,32 +2,39 @@ import React from 'react';
 import { Field, ErrorMessage } from 'formik';
 import TextError from './TextError';
 
-function FormikRadio(props) {
+function Formikradio(props) {
   const { label, name, options, ...rest } = props;
   return (
-    <div classname="form-control">
-      <label htmlFor={name}>{label}</label>
-      <Field as="radio" name={name} id={name} {...rest}>
-        {({ field }) => {
-          options.map((option) => {
-            return (
-              <React.Fragment key={option.key}>
-                <input
-                  type="radio"
-                  id={option.value}
-                  {...field}
-                  value={option.value}
-                  checked={field.value === option.value}
-                ></input>
-                <label htmlFor={option.value}>{option.key}</label>
-              </React.Fragment>
-            );
-          });
-        }}
-      </Field>
-      <ErrorMessage name={name} component={TextError} />
-    </div>
+    <>
+      <div className="form-control">
+        <label>{label}</label>
+        <div className="radio-choice-outer-wrapper">
+          <Field name={name}>
+            {({ field }) => {
+              return options.map((option) => {
+                return (
+                  <React.Fragment key={option.key}>
+                    <div class="radio-choice">
+                      <label htmlFor={option.value}>{option.key}</label>
+                      <input
+                        type="radio"
+                        id={option.value}
+                        {...field}
+                        {...rest}
+                        value={option.value}
+                        checked={field.value === option.value}
+                      />
+                    </div>
+                  </React.Fragment>
+                );
+              });
+            }}
+          </Field>
+        </div>
+      </div>
+      <ErrorMessage component={TextError} name={name} />
+    </>
   );
 }
 
-export default FormikRadio;
+export default Formikradio;

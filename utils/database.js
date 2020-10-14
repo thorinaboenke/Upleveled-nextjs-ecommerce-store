@@ -131,22 +131,25 @@ export async function getReviews() {
 }
 
 export async function getReviewsByProductId(p_id) {
-  const allReviews = await sql`
+  if (!/^\d+$/.test(p_id)) return undefined;
+  const reviewsByProductId = await sql`
   SELECT * from reviews WHERE product_id = ${p_id};`;
-  return allReviews.map((r) => camelcaseKeys(r));
+  if (reviewsByProductId) {
+    return reviewsByProductId.map((r) => camelcaseKeys(r));
+  }
+}
+export async function getReviewsByUserId(u_id) {
+  if (!/^\d+$/.test(u_id)) return undefined;
+  const reviewsByUserId = await sql`
+  SELECT * from reviews WHERE user_id = ${u_id};`;
+  return reviewsByUserId.map((r) => camelcaseKeys(r));
 }
 
-export async function getReviewByProductId(p_id) {
-  if (!/^\d+$/.test(p_id)) return undefined;
-  const reviewsByProductId = sql`
-  SELECT * from reviews WHERE product_id = ${p_id}`;
-  return reviewsByProductId;
-}
-export async function getReviewByUserId(u_id) {
-  if (!/^\d+$/.test(u_id)) return undefined;
-  const reviewsByUserId = sql`
-  SELECT * from reviews WHERE user_id = ${u_id}`;
-  return reviewsByUserId;
+export async function getReviewById(r_id) {
+  if (!/^\d+$/.test(r_id)) return undefined;
+  const reviewByReviewId = await sql`
+  SELECT * from reviews WHERE review_id = ${r_id};`;
+  return reviewByReviewId.map((r) => camelcaseKeys(reviewByReviewId))[0];
 }
 
 export async function insertReview(review) {
@@ -171,4 +174,55 @@ VALUES
 (${review.productId}, ${review.rating},${review.reviewText})
 RETURNING *;`;
   return reviews.map((r) => camelcaseKeys(r))[0];
+}
+
+export async function deleteReviewById(r_id) {
+  const reviews = await sql`
+DELETE FROM reviews
+WHERE review_id = ${r_id}
+RETURNING *;
+`;
+  return reviews.map((r) => camelcaseKeys(r))[0];
+}
+
+export async function updateReviewById(r_id, review) {
+  // Return undefined if the id is not
+  // in the correct format
+  if (!/^\d+$/.test(r_id)) return undefined;
+
+  // const allowedProperties = ['reviewText', 'rating'];
+  // const reviewProperties = Object.keys(review);
+
+  // // if (reviewProperties.length < 1) {
+  // //   return undefined;
+  // // }
+
+  // const difference = reviewProperties.filter(
+  //   (prop) => !allowedProperties.includes(prop),
+  // );
+
+  // if (difference.length > 0) {
+  //   return undefined;
+  // }
+
+  let reviews = [];
+
+  if ('reviewText' in review) {
+    reviews = await sql`
+      UPDATE reviews
+        SET review_text = ${review.reviewText}
+        WHERE review_id = ${r_id}
+        RETURNING *;
+    `;
+  }
+
+  if ('rating' in review) {
+    reviews = await sql`
+      UPDATE reviews
+        SET rating = ${review.rating}
+        WHERE review_id = ${r_id}
+        RETURNING *;
+    `;
+  }
+  return reviews.map((u) => camelcaseKeys(u))[0];
 }

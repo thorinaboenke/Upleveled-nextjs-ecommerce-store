@@ -1,9 +1,9 @@
 import React from 'react';
-import FormikInput from './FormikInput';
-import FormikTextarea from './FormikTextarea';
-import FormikSelect from './FormikSelect';
-import FormikRadio from './FormikRadio';
-import FormikCheckbox from './FormikCheckbox';
+import FormikInput from './Formikinput';
+import FormikTextarea from './Formiktextarea';
+import FormikSelect from './Formikselect';
+import FormikRadio from './Formikradio';
+import FormikCheckbox from './Formikcheckbox';
 // dicides which form fields have to be rendered based on one particular prop:
 function FormikControl(props) {
   const { control, ...rest } = props;
@@ -22,7 +22,6 @@ function FormikControl(props) {
     default:
       return null;
   }
-  return <div></div>;
 }
 
 export default FormikControl;

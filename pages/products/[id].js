@@ -6,11 +6,11 @@ import nextCookies from 'next-cookies';
 import Link from 'next/link';
 import FormikControl from '../../components/formik/FormikControl';
 import { Formik, Form } from 'formik';
+import Review from '../../components/Review';
 
 export default function Product(props) {
   const [cart, setCart] = useState(props.cartFromCookies);
   const [leaveReview, setLeaveReview] = useState(false);
-  const [isInReviewEditMode, setIsInReviewEditMode] = useState(false);
   const products = props.products;
   //make array with all the avaiable product ids
   const allProductIds = products.map((product) => product.id);
@@ -38,6 +38,22 @@ export default function Product(props) {
   const prev = getPrev(props.index, allProductIds);
   const product = props.product;
 
+  const getAverageRating = (reviews) => {
+    if (!reviews) {
+      return 'Be the first to leave a review!';
+    }
+    const averageRating = Number(
+      reviews?.reduce((acc, curr) => {
+        return acc + curr.rating;
+      }, 0) / reviews.length,
+    ).toFixed(1);
+    if (isNaN(averageRating)) {
+      return 'Be the first to leave a review!';
+    }
+
+    return 'Average Rating: ' + averageRating + '/5';
+  };
+
   async function onSubmit(values) {
     console.log('Form data', values);
     console.log('Form data', values.rating);
@@ -58,6 +74,28 @@ export default function Product(props) {
     });
     const newReview = (await response.json()).review;
   }
+  const radioOptions = [
+    {
+      key: '1',
+      value: 1,
+    },
+    {
+      key: '2',
+      value: 2,
+    },
+    {
+      key: '3',
+      value: 3,
+    },
+    {
+      key: '4',
+      value: 4,
+    },
+    {
+      key: '5',
+      value: 5,
+    },
+  ];
 
   if (!props.product) {
     return (
@@ -89,62 +127,68 @@ export default function Product(props) {
         <div className={styles.productdescription}>{product.description}</div>
         <div className={styles.price}>{product.price} Credits</div>
         <AddToCart id={product.id} setCart={setCart} />
-        {!leaveReview && (
-          <button onClick={() => setLeaveReview(!leaveReview)}>
-            Leave a review
-          </button>
-        )}
-        {leaveReview && (
-          <div>
-            <Formik
-              initialValues={{
-                productId: product.id,
-                rating: '',
-                reviewText: '',
-              }}
-              onSubmit={onSubmit}
-            >
-              {(formik) => (
-                <Form>
-                  <FormikControl
-                    control="input"
-                    type="number"
-                    min={1}
-                    max={5}
-                    name="rating"
-                    label="Rating (1-5)"
-                  />
-                  <FormikControl
-                    control="textarea"
-                    name="reviewText"
-                    label="Your review"
-                  />
-                  <button type="submit">Send</button>
-                </Form>
-              )}
-            </Formik>
-            <button onClick={() => setLeaveReview(!leaveReview)}>Cancel</button>
+        <div className={styles.reviewsection}>
+          <div className={styles.averagerating}>
+            {getAverageRating(reviewsByProductId)}
           </div>
-        )}
-      </div>
-      <div>
-        Average Rating:{' '}
-        {Number(
-          reviewsByProductId.reduce((acc, curr) => {
-            return acc + curr.rating;
-          }, 0) / reviewsByProductId.length,
-        ).toFixed(1)}
-      </div>
-      <div>Reviews</div>
-      <div>
-        {reviewsByProductId.map((rev) => {
-          return (
-            <div id={rev.reviewId}>
-              <div>{rev.rating}/5 Stars</div>
-              <div>{rev.reviewText}</div>
+          {!leaveReview && (
+            <button onClick={() => setLeaveReview(!leaveReview)}>
+              Leave a review
+            </button>
+          )}
+          {leaveReview && (
+            <div>
+              <Formik
+                initialValues={{
+                  productId: product.id,
+                  rating: '',
+                  rating2: '',
+                  reviewText: '',
+                }}
+                onSubmit={onSubmit}
+              >
+                {(formik) => (
+                  <Form>
+                    <FormikControl
+                      control="input"
+                      type="number"
+                      min={1}
+                      max={5}
+                      name="rating"
+                      label="Rating (1-5)"
+                    />
+                    <FormikControl
+                      control="radio"
+                      name="rating2"
+                      label="Give a rating (1-5)"
+                      options={radioOptions}
+                    />
+                    <FormikControl
+                      control="textarea"
+                      name="reviewText"
+                      label="Your review"
+                    />
+                    <button type="submit">Send</button>
+                  </Form>
+                )}
+              </Formik>
+              <button onClick={() => setLeaveReview(!leaveReview)}>
+                Cancel
+              </button>
             </div>
-          );
-        })}
+          )}
+
+          {!reviewsByProductId && <div>Reviews</div>}
+          <div className={styles.reviewscontainer}>
+            {reviewsByProductId.map((rev) => {
+              return (
+                <div id={rev.reviewId} className={styles.singlereviewcontainer}>
+                  <Review rev={rev} />
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </Layout>
   );
@@ -165,7 +209,7 @@ export async function getServerSideProps(context) {
   const props = {};
   props.index = context.query.id;
   props.products = products;
-  props.reviewsByProductId = reviewsByProductId;
+  props.reviewsByProductId = reviewsByProductId || [];
   props.cartFromCookies = cartFromCookies;
   if (product) props.product = product;
 
