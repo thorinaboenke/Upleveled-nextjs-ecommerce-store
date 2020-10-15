@@ -1,17 +1,25 @@
-import { useState, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { Layout } from '../../components/Layout';
 import styles from '../../styles/Home.module.css';
 import AddToCart from '../../components/AddToCart';
 import nextCookies from 'next-cookies';
+import { ProductCart, ProductList } from '../../utils/types';
 
-export default function Products(props) {
+type ProductProps = {
+  cartFromCookies: ProductCart;
+  products: ProductList;
+};
+
+export default function Products(props: ProductProps) {
   const [cart, setCart] = useState(props.cartFromCookies);
   const [allProducts, setAllProducts] = useState(props.products);
-  const [value, setValue] = useState('');
+  const [value] = useState('');
+  const [inputSort, setInputSort] = useState('');
+  const [inputSearch, setInputSearch] = useState('');
 
-  function sortProducts(all, sortParam) {
+  function sortProducts(all: ProductList, sortParam: string) {
     const copyAll = [...all];
     if (sortParam === 'none') return all;
     if (sortParam === 'asc')
@@ -24,15 +32,31 @@ export default function Products(props) {
       });
     if (sortParam === 'abc')
       return copyAll.sort((a, b) => (a.name > b.name ? 1 : -1));
-  }
-  // set all products to a sorted list of the current allProducts
-  function handleSortChange(e) {
-    e.preventDefault();
-    const val = e.currentTarget.value;
-    setAllProducts(() => sortProducts(allProducts, val));
+    else {
+      return all;
+    }
   }
 
-  function searchProducts(all, searchParam) {
+  useEffect(() => {
+    setAllProducts(() => {
+      return searchProducts(
+        sortProducts(props.products, inputSort),
+        inputSearch,
+      );
+    });
+  }, [inputSort, inputSearch, props.products]);
+
+  // set all products to a sorted list of the current allProducts
+  function handleSortChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    setInputSort(e.currentTarget.value);
+  }
+
+  // set all products: running the search function with the sort function nested inside
+  function handleSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setInputSearch(e.target.value);
+  }
+
+  function searchProducts(all: ProductList, searchParam: string) {
     //filter does not mutate
     const searchedProducts = all.filter(
       (product) =>
@@ -40,22 +64,6 @@ export default function Products(props) {
         product.name.toLowerCase().includes(searchParam.toLowerCase()),
     );
     return searchedProducts;
-  }
-
-  //use ref on inputs to persist between renders
-  const inputSearch = useRef(' ');
-  const inputSort = useRef(' ');
-
-  // set all products: running the search function with the sort function nested inside
-  function handleSearchChange(e) {
-    const all = [...props.products];
-    e.preventDefault();
-    setAllProducts(
-      searchProducts(
-        sortProducts(all, inputSort.current.value),
-        inputSearch.current.value,
-      ),
-    );
   }
 
   return (
@@ -69,9 +77,11 @@ export default function Products(props) {
           <div>
             <label htmlFor="sort">Sort by: </label>
             <select
-              ref={inputSort}
               id="sort"
               onChange={(e) => {
+                handleSortChange(e);
+              }}
+              onBlur={(e) => {
                 handleSortChange(e);
               }}
               defaultValue={value}
@@ -84,10 +94,12 @@ export default function Products(props) {
             <br />
             <label htmlFor="filter">Search: </label>
             <input
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') handleSearchChange(e);
+              // onKeyDown={(e) => {
+              //    handleSearchChange(e);
+              // }}
+              onChange={(e) => {
+                handleSearchChange(e);
               }}
-              ref={inputSearch}
               type="text"
               id="filter"
               placeholder="keyword"

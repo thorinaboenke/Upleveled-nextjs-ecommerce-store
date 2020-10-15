@@ -4,6 +4,7 @@ export type Amount = number;
 
 export type Product = {
   id: Id;
+  name: string;
   description: string;
   price: Price;
   url: string;
