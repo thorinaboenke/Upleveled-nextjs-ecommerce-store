@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import Layout from '../components/Layout';
+// import Layout from '../components/Layout';
 import Planets from '../components/Planets';
 import styles from '../styles/Home.module.css';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import nextCookies from 'next-cookies';
 import { ProductCart } from '../utils/types';
 import { GetServerSidePropsContext } from 'next';
+import { Layout } from '../components/Layout';
 
 const planetClient = new ApolloClient({
   uri: 'https://my-starwars-api.herokuapp.com/',

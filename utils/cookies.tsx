@@ -1,5 +1,5 @@
 import cookie from 'js-cookie';
-import { Id, ProductCart } from './types';
+import { Id, ProductCart, ProductList } from './types';
 
 export function getCartFromCookies() {
   const cart = cookie.getJSON('cart') || [];
@@ -10,6 +10,7 @@ export function addAmountToCartInCookie(id: Id, quantity: number) {
   // the id and quantity (as integer) are passed to the function
   // get the old cart from the Cookies
   const cart: ProductCart = getCartFromCookies();
+  console.log('cart', cart);
   let newCart: ProductCart;
   // first check if the cart exists (length) and the id is aleady in, filter will return true, then to make the new cart, map over existing cart, and where the id is the same as passed in, increase amount by the quantity
   // otherwise, cart is empty or does not contain the item yet, push item to new cart
@@ -24,7 +25,7 @@ export function addAmountToCartInCookie(id: Id, quantity: number) {
   } else {
     newCart = [{ id: id, amount: quantity }];
   }
-
+  console.log('new', newCart);
   // set the cookie to the new cart and return new cart
   cookie.set('cart', newCart);
   return newCart;
@@ -76,4 +77,28 @@ export function calculateTotalItemsInCart(cart: ProductCart) {
     return acc + parseInt(curr.amount);
   }, 0);
   return totalItems;
+}
+
+export function calculateTotalwithShipping(
+  amount: number,
+  minimumOrderValue: number,
+  shippingFees: number,
+) {
+  if (amount < minimumOrderValue) {
+    return amount + shippingFees;
+  } else {
+    return amount;
+  }
+}
+
+export function calculateTotal(cartForTotal: ProductCart, prod: ProductList) {
+  // if (prod.length === 0 || cartForTotal.length === 0) {
+  //   return undefined;
+  // }
+  const total = cartForTotal.reduce((acc, curr) => {
+    return (
+      acc + curr.amount * prod?.find((product) => product.id === curr.id)!.price
+    );
+  }, 0);
+  return total;
 }

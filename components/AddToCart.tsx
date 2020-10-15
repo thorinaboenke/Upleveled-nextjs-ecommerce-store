@@ -1,22 +1,27 @@
 import styles from '../styles/Home.module.css';
-import { useState } from 'react';
-import { addToCart } from '../functions.js';
-import { addAmountToCartInCookie } from '../utils/cookies.tsx';
-import { getCartFromCookies } from '../utils/cookies.tsx';
+import { FunctionComponent, useState } from 'react';
 
-export default function AddToCart(props) {
+import { addAmountToCartInCookie, getCartFromCookies } from '../utils/cookies';
+import { Id } from '../utils/types';
+
+type AddToCartProps = {
+  id: Id;
+  setCart: FunctionComponent;
+};
+
+export default function AddToCart(props: AddToCartProps) {
   const [quantity, setQuantity] = useState(1);
-  const handleChange = (e) => {
-    setQuantity(e.target.value);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuantity(parseInt(e.currentTarget.value));
   };
 
-  function handleAddToCart(e) {
+  function handleAddToCart(e: React.FormEvent) {
     e.preventDefault();
     const id = props.id;
     const quant = quantity;
     // here stuff has to happen with the cookie:
     addAmountToCartInCookie(id, parseInt(quant));
-    setQuantity('1');
+    setQuantity(1);
     props.setCart(getCartFromCookies());
   }
 

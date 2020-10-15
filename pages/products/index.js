@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import Layout from '../../components/Layout';
+import {Layout} from '../../components/Layout';
 import styles from '../../styles/Home.module.css';
 import AddToCart from '../../components/AddToCart';
 import nextCookies from 'next-cookies';

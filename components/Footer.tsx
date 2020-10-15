@@ -26,35 +26,35 @@ export default function Footer() {
               className={styles.socialmedia}
               src="/twitter.svg"
               alt="twitter icon"
-            ></img>
+            />
           </a>
           <a href="/">
             <img
               className={styles.socialmedia}
               src="/github.svg"
               alt="github icon"
-            ></img>
+            />
           </a>
           <a href="/">
             <img
               className={styles.socialmedia}
               src="/whatsapp.svg"
               alt="whatsapp icon"
-            ></img>
+            />
           </a>
           <a href="/">
             <img
               className={styles.socialmedia}
               src="/instagram.svg"
               alt="instagram icon"
-            ></img>
+            />
           </a>
           <a href="/">
             <img
               className={styles.socialmedia}
               src="/facebook.svg"
               alt="facebook icon"
-            ></img>
+            />
           </a>
         </div>
       </div>

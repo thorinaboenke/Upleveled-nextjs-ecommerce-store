@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from '../../styles/Home.module.css';
-import Layout from '../../components/Layout';
+import {Layout} from '../../components/Layout';
 import AddToCart from '../../components/AddToCart';
 import nextCookies from 'next-cookies';
 import Link from 'next/link';

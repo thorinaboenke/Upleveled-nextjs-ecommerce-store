@@ -1,33 +1,18 @@
-import { useState, useEffect } from 'react';
 import styles from '../styles/Home.module.css';
 import Link from 'next/link';
 import { calculateTotalItemsInCart } from '../utils/cookies.tsx';
 import { removeItemFromCartInCookie } from '../utils/cookies.tsx';
 import { updateAmountInCartInCookie } from '../utils/cookies.tsx';
 import { getCartFromCookies } from '../utils/cookies.tsx';
+import { calculateTotal, calculateTotalwithShipping } from '../utils/cookies';
 
 export default function Cart({ cart, setCart, databaseproducts }) {
   const shippingFee = 49;
   const minOrderValue = 499;
   const products = databaseproducts;
 
-  function calculateTotal(cartForTotal) {
-    const total = cartForTotal.reduce((acc, curr) => {
-      return (
-        acc +
-        curr.amount * products.find((product) => product.id === curr.id).price
-      );
-    }, 0);
-    return total;
-  }
+  console.log(databaseproducts);
 
-  function calculateTotalwithShipping(amount, minOrderValue, shippingFee) {
-    if (amount < minOrderValue) {
-      return amount + shippingFee;
-    } else {
-      return amount;
-    }
-  }
   if (cart.length > 0) {
     return (
       <div className={styles.cart}>
@@ -63,10 +48,13 @@ export default function Cart({ cart, setCart, databaseproducts }) {
                       min="1"
                       value={item.amount}
                       onChange={(e) => {
-                        updateAmountInCartInCookie(item.id, e.target.value);
+                        updateAmountInCartInCookie(
+                          item.id,
+                          parseInt(e.target.value),
+                        );
                         setCart(getCartFromCookies());
                       }}
-                    ></input>
+                    />
                     <button
                       className={styles.removebutton}
                       onClick={() => {
@@ -109,7 +97,7 @@ export default function Cart({ cart, setCart, databaseproducts }) {
             <div className={styles.total}>
               Total:{' '}
               {calculateTotalwithShipping(
-                calculateTotal(cart),
+                calculateTotal(cart, databaseproducts),
                 minOrderValue,
                 shippingFee,
               )}

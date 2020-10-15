@@ -5,11 +5,8 @@ import FormikControl from './formik/FormikControl';
 
 import {
   Formik,
-  Field,
   Form,
   useField,
-  FieldArray,
-  ErrorMessage,
 } from 'formik';
 
 const MyCheckbox = ({ children, ...props }) => {
@@ -28,7 +25,7 @@ const MyCheckbox = ({ children, ...props }) => {
 };
 
 const MyTextField = ({ label, ...props }) => {
-  const [field, meta, helpers] = useField(props);
+  const [field, meta] = useField(props);
   return (
     <div className={styles.inlineblock}>
       <label>{label}</label>

@@ -1,16 +1,17 @@
-import { urlObjectKeys } from 'next/dist/next-server/lib/utils';
-import { useState } from 'react';
 import Link from 'next/link';
 import styles from '../styles/Home.module.css';
 import { calculateTotalItemsInCart } from '../utils/cookies';
-import { getCartFromCookies } from '../utils/cookies';
 
-export default function NavBar({ cart }) {
+type NavBarProps = {
+  cart: ProductCart;
+};
+
+export default function NavBar(props: NavBarProps) {
   return (
     <div className={styles.nav}>
       <Link href="/">
         <a>
-          <img src={'/logo.jpg'} alt="jawa-logo" className={styles.logo}></img>{' '}
+          <img src={'/logo.jpg'} alt="jawa-logo" className={styles.logo} />{' '}
           <div className={styles.shopname}>JAWA Merch</div>
         </a>
       </Link>
@@ -24,9 +25,9 @@ export default function NavBar({ cart }) {
         <Link href="/cart">
           <a>
             <div aria-label="total items in cart">
-              {`    ` + calculateTotalItemsInCart(cart)}
+              {`    ` + calculateTotalItemsInCart(props.cart)}
             </div>
-            <img src="/cart.svg" alt="cart" height="20px"></img>
+            <img src="/cart.svg" alt="cart" height="20px" />
           </a>
         </Link>
 
@@ -36,15 +37,4 @@ export default function NavBar({ cart }) {
       </div>
     </div>
   );
-}
-
-export function getServerSideProps(context) {
-  const allCookies = nextCookies(context);
-  const cartFromCookies = allCookies.cart || [];
-  console.log(cartFromCookies);
-  return {
-    props: {
-      cartFromCookies: cartFromCookies,
-    },
-  };
 }

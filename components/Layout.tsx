@@ -1,18 +1,22 @@
-import Footer from './Footer';
-import Header from './Header';
-import NavBar from './NavBar';
+import Footer from './Footer.tsx';
+import Header from './Header.tsx';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
+import { ProductCart } from '../utils/types';
+import { FunctionComponent } from 'react';
 
-export default function Layout({ children, cart }) {
-  // <Footer></Footer>
+type LayoutProps = {
+  cart: ProductCart;
+};
+
+export const Layout: FunctionComponent<LayoutProps> = ({ children, cart }) => {
   return (
     <>
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={styles.bodyflexbox}>
-        <Header cart={cart}></Header>
+        <Header cart={cart} />
         <main className={styles.main}>{children}</main>
         <div className={styles.footer}>
           <Footer />
@@ -20,4 +24,4 @@ export default function Layout({ children, cart }) {
       </div>
     </>
   );
-}
+};
