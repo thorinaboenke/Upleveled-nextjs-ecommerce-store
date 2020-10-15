@@ -9,9 +9,9 @@ export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse,
 ) {
-  const reviewId = request.query.id as string;
+  const reviewId = Number(request.query.id as string);
 
-  if (!/^\d+$/.test(reviewId)) {
+  if (!/^\d+$/.test(reviewId.toString())) {
     response.statusCode = 404;
     response.setHeader('Content-Type', 'application/json');
     return response.end(JSON.stringify({ errors: 'Not found' }));

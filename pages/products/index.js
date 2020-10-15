@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import {Layout} from '../../components/Layout';
+import { Layout } from '../../components/Layout';
 import styles from '../../styles/Home.module.css';
 import AddToCart from '../../components/AddToCart';
 import nextCookies from 'next-cookies';
@@ -10,13 +10,6 @@ export default function Products(props) {
   const [cart, setCart] = useState(props.cartFromCookies);
   const [allProducts, setAllProducts] = useState(props.products);
   const [value, setValue] = useState('');
-
-  // set all products to a sorted list of the current allProducts
-  function handleSortChange(e) {
-    e.preventDefault();
-    const val = e.currentTarget.value;
-    setAllProducts(() => sortProducts(allProducts, val));
-  }
 
   function sortProducts(all, sortParam) {
     const copyAll = [...all];
@@ -32,17 +25,11 @@ export default function Products(props) {
     if (sortParam === 'abc')
       return copyAll.sort((a, b) => (a.name > b.name ? 1 : -1));
   }
-
-  // set all products: running the search function with the sort function nested inside
-  function handleSearchChange(e) {
-    const all = [...props.products];
+  // set all products to a sorted list of the current allProducts
+  function handleSortChange(e) {
     e.preventDefault();
-    setAllProducts(
-      searchProducts(
-        sortProducts(all, inputSort.current.value),
-        inputSearch.current.value,
-      ),
-    );
+    const val = e.currentTarget.value;
+    setAllProducts(() => sortProducts(allProducts, val));
   }
 
   function searchProducts(all, searchParam) {
@@ -58,6 +45,18 @@ export default function Products(props) {
   //use ref on inputs to persist between renders
   const inputSearch = useRef(' ');
   const inputSort = useRef(' ');
+
+  // set all products: running the search function with the sort function nested inside
+  function handleSearchChange(e) {
+    const all = [...props.products];
+    e.preventDefault();
+    setAllProducts(
+      searchProducts(
+        sortProducts(all, inputSort.current.value),
+        inputSearch.current.value,
+      ),
+    );
+  }
 
   return (
     <>
@@ -92,7 +91,7 @@ export default function Products(props) {
               type="text"
               id="filter"
               placeholder="keyword"
-            ></input>
+            />
           </div>
 
           <button onClick={(e) => handleSearchChange(e)}>Search</button>
@@ -102,7 +101,7 @@ export default function Products(props) {
                 <div key={product.id} className={styles.productcard}>
                   <div>
                     <Link href={`/products/${product.id}`}>
-                      <img src={product.url} alt=""></img>
+                      <img src={product.url} alt="" />
                     </Link>
                   </div>
                   <Link href={`/products/${product.id}`}>
@@ -124,7 +123,7 @@ export default function Products(props) {
 }
 
 export async function getServerSideProps(context) {
-  const { getProducts } = await import('../../utils/database.js');
+  const { getProducts } = await import('../../utils/database.ts');
   const products = await getProducts();
   const allCookies = nextCookies(context);
   const cartFromCookies = allCookies.cart || [];

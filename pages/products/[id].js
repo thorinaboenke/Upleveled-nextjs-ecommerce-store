@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styles from '../../styles/Home.module.css';
-import {Layout} from '../../components/Layout';
+import { Layout } from '../../components/Layout';
 import AddToCart from '../../components/AddToCart';
 import nextCookies from 'next-cookies';
 import Link from 'next/link';
@@ -205,9 +205,9 @@ export default function Product(props) {
 }
 
 export async function getServerSideProps(context) {
-  const { getReviewsByProductId } = await import('../../utils/database.js');
-  const { getProductById } = await import('../../utils/database.js');
-  const { getProducts } = await import('../../utils/database.js');
+  const { getReviewsByProductId } = await import('../../utils/database.ts');
+  const { getProductById } = await import('../../utils/database.ts');
+  const { getProducts } = await import('../../utils/database.ts');
   const products = await getProducts();
   const allProductIds = products.map((product) => product.id);
   const product = await getProductById(allProductIds[context.query.id - 1]);
