@@ -13,6 +13,7 @@ type ReviewProps = {
   setEdited: Dispatch<SetStateAction<boolean>>;
   setReviewsByProductId: Dispatch<SetStateAction<Reviews>>;
   setLoading: Dispatch<SetStateAction<boolean>>;
+  loading: boolean;
 };
 
 export const SingleReview: FunctionComponent<ReviewProps> = ({

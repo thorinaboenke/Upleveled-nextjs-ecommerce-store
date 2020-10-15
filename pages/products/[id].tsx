@@ -7,8 +7,24 @@ import Link from 'next/link';
 import FormikControl from '../../components/formik/FormikControl';
 import { Formik, Form } from 'formik';
 import SingleReview from '../../components/Review';
+import {
+  Product,
+  ProductCart,
+  ProductList,
+  Review,
+  Reviews,
+} from '../../utils/types';
+import { GetServerSidePropsContext } from 'next';
 
-export default function Product(props) {
+type ProductPageProps = {
+  cartFromCookies: ProductCart;
+  reviewsByProductId: Reviews;
+  products: ProductList;
+  product: Product;
+  index: string;
+};
+
+export default function Productpage(props: ProductPageProps) {
   const [cart, setCart] = useState(props.cartFromCookies);
   const [leaveReview, setLeaveReview] = useState(false);
   const [showMore, setShowMore] = useState(false);
@@ -21,13 +37,16 @@ export default function Product(props) {
 
   const products = props.products;
   //make array with all the avaiable product ids
-  const allProductIds = products.map((product) => product.id);
+  const allProductIds = products.map((product: Product) => product.id);
   // const reviewsByProductId = props.reviewsByProductId;
-  const numberOfReviewsToShow = showMore ? reviewsByProductId.length : 3;
+  const defaultNumberOfReviewsToShow = 3;
+  const numberOfReviewsToShow = showMore
+    ? reviewsByProductId.length
+    : defaultNumberOfReviewsToShow;
 
   //the index in the url acceses the id in the array of ids of the products on the server side
   // the pagination functions get the index url from the current index and the length of the array of ids
-  function getPrev(index, ArrayOfIds) {
+  function getPrev(index: string, ArrayOfIds: number[]) {
     if (index === '1') {
       return '' + ArrayOfIds.length;
     }
@@ -35,7 +54,7 @@ export default function Product(props) {
     return '' + next;
   }
 
-  function getNext(index, ArrayOfIds) {
+  function getNext(index: string, ArrayOfIds: number[]) {
     if (parseInt(index) === ArrayOfIds.length) {
       return 1 + '';
     } else {
@@ -47,7 +66,7 @@ export default function Product(props) {
   const prev = getPrev(props.index, allProductIds);
   const product = props.product;
 
-  const getAverageRating = (reviews) => {
+  const getAverageRating = (reviews: Reviews) => {
     if (!reviews) {
       return 'Be the first to leave a review!';
     }
@@ -56,14 +75,20 @@ export default function Product(props) {
         return acc + curr.rating;
       }, 0) / reviews.length,
     ).toFixed(1);
-    if (isNaN(averageRating)) {
+    if (isNaN(Number(averageRating))) {
       return 'Be the first to leave a review!';
     }
 
     return 'Average Rating: ' + averageRating + '/5';
   };
 
-  async function onSubmit(values) {
+  type FormValues = {
+    productId: number;
+    rating: string;
+    reviewText: string;
+  };
+
+  async function onSubmit(values: FormValues) {
     setLeaveReview(!leaveReview);
 
     const response = await fetch(`/api/reviews`, {
@@ -79,7 +104,7 @@ export default function Product(props) {
         },
       }),
     });
-    const newReview = (await response.json()).review;
+    const newReview: Review = (await response.json()).review;
   }
   const radioOptions = [
     {
@@ -121,14 +146,14 @@ export default function Product(props) {
   return (
     <Layout cart={cart}>
       <Link href={`/products/${prev}`}>
-        <div className={styles.pageleft}></div>
+        <div className={styles.pageleft} />
       </Link>
       <Link href={`/products/${next}`}>
-        <div className={styles.pageright}></div>
+        <div className={styles.pageright} />
       </Link>
       <div className={styles.singleproductcontainer}>
         <div className={styles.imagecontainer}>
-          <img src={product.url} alt=""></img>
+          <img src={product.url} alt="" />
         </div>
         <div className={styles.producttitle}>{product.name}</div>
         <div className={styles.productdescription}>{product.description}</div>
@@ -154,7 +179,7 @@ export default function Product(props) {
                 onSubmit={onSubmit}
               >
                 {(formik) => (
-                  <Form>
+                  <Form translate={''}>
                     <FormikControl
                       control="radio"
                       name="rating"
@@ -180,7 +205,10 @@ export default function Product(props) {
           <div className={styles.reviewscontainer}>
             {reviewsByProductId.slice(0, numberOfReviewsToShow).map((rev) => {
               return (
-                <div id={rev.reviewId} className={styles.singlereviewcontainer}>
+                <div
+                  id={rev.reviewId.toString()}
+                  className={styles.singlereviewcontainer}
+                >
                   <SingleReview
                     rev={rev}
                     edited={edited}
@@ -204,19 +232,21 @@ export default function Product(props) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const { getReviewsByProductId } = await import('../../utils/database.ts');
-  const { getProductById } = await import('../../utils/database.ts');
-  const { getProducts } = await import('../../utils/database.ts');
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { getReviewsByProductId } = await import('../../utils/database');
+  const { getProductById } = await import('../../utils/database');
+  const { getProducts } = await import('../../utils/database');
   const products = await getProducts();
-  const allProductIds = products.map((product) => product.id);
-  const product = await getProductById(allProductIds[context.query.id - 1]);
+  const allProductIds = products.map((product: Product) => product.id);
+  const product = await getProductById(
+    allProductIds[Number(context.query.id) - 1],
+  );
   const reviewsByProductId = await getReviewsByProductId(
-    allProductIds[context.query.id - 1],
+    allProductIds[Number(context.query.id) - 1],
   );
   const allCookies = nextCookies(context);
   const cartFromCookies = allCookies.cart || [];
-  const props = {};
+  const props: any = {};
   props.index = context.query.id;
   props.products = products;
   props.reviewsByProductId = reviewsByProductId || [];
