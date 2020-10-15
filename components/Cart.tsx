@@ -1,17 +1,27 @@
 import styles from '../styles/Home.module.css';
 import Link from 'next/link';
-import { calculateTotalItemsInCart } from '../utils/cookies.tsx';
-import { removeItemFromCartInCookie } from '../utils/cookies.tsx';
-import { updateAmountInCartInCookie } from '../utils/cookies.tsx';
-import { getCartFromCookies } from '../utils/cookies.tsx';
+import { calculateTotalItemsInCart } from '../utils/cookies';
+import { removeItemFromCartInCookie } from '../utils/cookies';
+import { updateAmountInCartInCookie } from '../utils/cookies';
+import { getCartFromCookies } from '../utils/cookies';
 import { calculateTotal, calculateTotalwithShipping } from '../utils/cookies';
+import { ProductCart, ProductList } from '../utils/types';
+import { Dispatch, FunctionComponent, SetStateAction } from 'react';
 
-export default function Cart({ cart, setCart, databaseproducts }) {
+type CartProps = {
+  cart: ProductCart;
+  setCart: Dispatch<SetStateAction<ProductCart>>;
+  databaseproducts: ProductList;
+};
+
+export const Cart: FunctionComponent<CartProps> = ({
+  cart,
+  setCart,
+  databaseproducts,
+}) => {
   const shippingFee = 49;
   const minOrderValue = 499;
   const products = databaseproducts;
-
-  console.log(databaseproducts);
 
   if (cart.length > 0) {
     return (
@@ -25,20 +35,14 @@ export default function Cart({ cart, setCart, databaseproducts }) {
                   <img
                     alt=""
                     src={
-                      products.filter(
-                        (product) => product.id === parseInt(item.id),
-                      )[0].url
+                      products.find((product) => product.id === item.id)?.url
                     }
                     style={{ height: '100px' }}
                   />
                 </div>
                 <div className={styles.nameandquant}>
                   <div className={styles.name}>
-                    {
-                      products.find(
-                        (product) => product.id === parseInt(item.id),
-                      ).name
-                    }
+                    {products.find((product) => product.id === item.id)?.name}
                   </div>
 
                   <div className={styles.quant}>
@@ -66,22 +70,15 @@ export default function Cart({ cart, setCart, databaseproducts }) {
                     </button>
                   </div>
                 </div>
-                <div className={styles.placeholder}></div>
+                <div className={styles.placeholder} />
                 <div className={styles.priceandsubtotal}>
                   <div>
-                    {
-                      products.find(
-                        (product) => product.id === parseInt(item.id),
-                      ).price
-                    }
+                    {products.find((product) => product.id === item.id)?.price}
                   </div>
                   <div className={styles.subtotal}>
                     Subtotal:{' '}
-                    {item.amount *
-                      parseInt(
-                        products.find((product) => product.id === item.id)
-                          .price,
-                      )}
+                    {products.find((product) => product.id === item.id)
+                      ?.price || 0 * item.amount}
                   </div>
                 </div>
               </div>
@@ -90,7 +87,7 @@ export default function Cart({ cart, setCart, databaseproducts }) {
           <div>
             <div className={styles.subtotal}>
               Shipping Fees:{' '}
-              {calculateTotal(cart) > minOrderValue ? 0 : shippingFee}
+              {calculateTotal(cart, products) > minOrderValue ? 0 : shippingFee}
             </div>
           </div>
           <div>
@@ -122,4 +119,4 @@ export default function Cart({ cart, setCart, databaseproducts }) {
       </>
     );
   }
-}
+};

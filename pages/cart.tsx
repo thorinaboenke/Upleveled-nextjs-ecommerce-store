@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Head from 'next/head';
 import { Layout } from '../components/Layout';
 import nextCookies from 'next-cookies';
-import Cart from '../components/Cart';
+import { Cart } from '../components/Cart';
 import { ProductCart, ProductList } from '../utils/types';
 import { GetServerSidePropsContext } from 'next';
 

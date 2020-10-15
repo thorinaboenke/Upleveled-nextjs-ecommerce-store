@@ -1,12 +1,11 @@
-import styles from '../styles/Home.module.css';
-import { FunctionComponent, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 import { addAmountToCartInCookie, getCartFromCookies } from '../utils/cookies';
-import { Id } from '../utils/types';
+import { Id, ProductCart } from '../utils/types';
 
 type AddToCartProps = {
   id: Id;
-  setCart: FunctionComponent;
+  setCart: Dispatch<SetStateAction<ProductCart>>;
 };
 
 export default function AddToCart(props: AddToCartProps) {
@@ -20,7 +19,7 @@ export default function AddToCart(props: AddToCartProps) {
     const id = props.id;
     const quant = quantity;
     // here stuff has to happen with the cookie:
-    addAmountToCartInCookie(id, parseInt(quant));
+    addAmountToCartInCookie(id, quant);
     setQuantity(1);
     props.setCart(getCartFromCookies());
   }
