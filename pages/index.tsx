@@ -4,16 +4,21 @@ import Link from 'next/link';
 import Layout from '../components/Layout';
 import Planets from '../components/Planets';
 import styles from '../styles/Home.module.css';
-import { getCartFromCookies } from '../utils/cookies';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import nextCookies from 'next-cookies';
+import { ProductCart } from '../utils/types';
+import { GetServerSidePropsContext } from 'next';
 
 const planetClient = new ApolloClient({
   uri: 'https://my-starwars-api.herokuapp.com/',
   cache: new InMemoryCache(),
 });
 
-export default function Home(props) {
+type HomeProps = {
+  cartFromCookies: ProductCart;
+};
+
+export default function Home(props: HomeProps) {
   const [cart] = useState(props.cartFromCookies);
   return (
     <>
@@ -53,7 +58,7 @@ export default function Home(props) {
   );
 }
 
-export function getServerSideProps(context) {
+export function getServerSideProps(context: GetServerSidePropsContext) {
   const allCookies = nextCookies(context);
   const cartFromCookies = allCookies.cart || [];
   console.log(cartFromCookies);

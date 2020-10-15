@@ -13,16 +13,15 @@ const planetQuery = gql`
   }
 `;
 
-export default function Planets(props) {
+export default function Planets() {
   const { loading, error, data } = useQuery(planetQuery);
-  if (loading) return 'Loading...';
-  if (error) return 'Something went wrong...';
-  console.log(data);
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Something went wrong...</div>;
 
   return (
     <div className={styles.planetcontainer}>
       {data.allPlanets.planets.map((planet) =>
-        (planet.name === 'unknown') | 'Alderaan' ? null : (
+        (planet.name === 'unknown') | (planet.name === 'Alderaan') ? null : (
           <div key={planet.id} className={styles.planet}>
             {planet.name}
           </div>
