@@ -50,6 +50,7 @@ function Review({ rev, edited, setEdited, setReviewsByProductId, setLoading }) {
             aria-label="delete review"
             onClick={async () => {
               setLoading(true);
+
               await fetch(`/api/reviews/${rev.reviewId}`, {
                 method: 'DELETE',
               });

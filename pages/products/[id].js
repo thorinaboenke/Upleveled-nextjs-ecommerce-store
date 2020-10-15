@@ -185,6 +185,8 @@ export default function Product(props) {
                     rev={rev}
                     edited={edited}
                     setEdited={setEdited}
+                    setLoading={setLoading}
+                    loading={loading}
                     setReviewsByProductId={setReviewsByProductId}
                   />
                 </div>
