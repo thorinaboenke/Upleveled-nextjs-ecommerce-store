@@ -1,12 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, {
+  useState,
+  Dispatch,
+  SetStateAction,
+  FunctionComponent,
+} from 'react';
 import styles from '../styles/Home.module.css';
+import { Review, Reviews } from '../utils/types';
 
-function Review({ rev, edited, setEdited, setReviewsByProductId, setLoading }) {
+type ReviewProps = {
+  rev: Review;
+  edited: Boolean;
+  setEdited: Dispatch<SetStateAction<boolean>>;
+  setReviewsByProductId: Dispatch<SetStateAction<Reviews>>;
+  setLoading: Dispatch<SetStateAction<boolean>>;
+};
+
+export const SingleReview: FunctionComponent<ReviewProps> = ({
+  rev,
+  edited,
+  setEdited,
+  setReviewsByProductId,
+  setLoading,
+}) => {
   const [text, setText] = useState(rev.reviewText);
   const [rating, setRating] = useState(rev.rating);
   const [editReview, setEditReview] = useState(false);
 
-  const outputRatingAsStars = (r) => {
+  const outputRatingAsStars = (r: number) => {
     let output = '';
     const filledStar = '★';
     const emptyStar = '☆';
@@ -30,8 +50,10 @@ function Review({ rev, edited, setEdited, setReviewsByProductId, setLoading }) {
           type="number"
           min={1}
           max={5}
-          defaultValue={rev.rating}
-          onChange={(e) => setRating(e.currentTarget.value)}
+          defaultValue={rev.rating.toString()}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setRating(parseInt(e.currentTarget.value))
+          }
         />
       )}
       {!editReview ? (
@@ -89,6 +111,6 @@ function Review({ rev, edited, setEdited, setReviewsByProductId, setLoading }) {
       </div>
     </>
   );
-}
+};
 
-export default Review;
+export default SingleReview;

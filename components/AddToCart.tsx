@@ -14,7 +14,7 @@ export default function AddToCart(props: AddToCartProps) {
     setQuantity(parseInt(e.currentTarget.value));
   };
 
-  function handleAddToCart(e: React.FormEvent) {
+  function handleAddToCart(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const id = props.id;
     const quant = quantity;

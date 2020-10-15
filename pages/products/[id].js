@@ -6,7 +6,7 @@ import nextCookies from 'next-cookies';
 import Link from 'next/link';
 import FormikControl from '../../components/formik/FormikControl';
 import { Formik, Form } from 'formik';
-import Review from '../../components/Review';
+import SingleReview from '../../components/Review';
 
 export default function Product(props) {
   const [cart, setCart] = useState(props.cartFromCookies);
@@ -181,7 +181,7 @@ export default function Product(props) {
             {reviewsByProductId.slice(0, numberOfReviewsToShow).map((rev) => {
               return (
                 <div id={rev.reviewId} className={styles.singlereviewcontainer}>
-                  <Review
+                  <SingleReview
                     rev={rev}
                     edited={edited}
                     setEdited={setEdited}

@@ -4,9 +4,6 @@ import * as Yup from 'yup';
 import FormikControl from './formik/FormikControl';
 
 export default function Signup() {
-  const newsletterOptions = [
-    { key: 'Sign me up to the Newsletter', value: 'subscribe' },
-  ];
   const inititalValues = {
     username: '',
     email: '',

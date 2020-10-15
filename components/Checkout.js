@@ -1,13 +1,8 @@
-import { useState } from 'react';
 import styles from '../styles/Home.module.css';
 import * as Yup from 'yup';
 import FormikControl from './formik/FormikControl';
 
-import {
-  Formik,
-  Form,
-  useField,
-} from 'formik';
+import { Formik, Form, useField } from 'formik';
 
 const MyCheckbox = ({ children, ...props }) => {
   const [field, meta] = useField({ ...props, type: 'checkbox' });
@@ -24,21 +19,21 @@ const MyCheckbox = ({ children, ...props }) => {
   );
 };
 
-const MyTextField = ({ label, ...props }) => {
-  const [field, meta] = useField(props);
-  return (
-    <div className={styles.inlineblock}>
-      <label>{label}</label>
-      <br />
-      <input {...field} {...props} />
+// const MyTextField = ({ label, ...props }) => {
+//   const [field, meta] = useField(props);
+//   return (
+//     <div className={styles.inlineblock}>
+//       <label>{label}</label>
+//       <br />
+//       <input {...field} {...props} />
 
-      {meta.touched && meta.error ? (
-        <div className="error">{meta.error}</div>
-      ) : null}
-      <br />
-    </div>
-  );
-};
+//       {meta.touched && meta.error ? (
+//         <div className="error">{meta.error}</div>
+//       ) : null}
+//       <br />
+//     </div>
+//   );
+// };
 
 const FormikCheckout = () => (
   <div>
