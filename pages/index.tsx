@@ -62,7 +62,6 @@ export default function Home(props: HomeProps) {
 export function getServerSideProps(context: GetServerSidePropsContext) {
   const allCookies = nextCookies(context);
   const cartFromCookies = allCookies.cart || [];
-  console.log(cartFromCookies);
   return {
     props: {
       cartFromCookies: cartFromCookies,
