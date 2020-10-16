@@ -2,9 +2,18 @@ import postgres from 'postgres';
 import dotenv from 'dotenv';
 import camelcaseKeys from 'camelcase-keys';
 import { Id, Review, Reviews } from './types';
+import extractHerokuDatabaseEnvVars from './extractHerokuDatabaseEnvVars';
+
+extractHerokuDatabaseEnvVars();
 
 dotenv.config();
-const sql = postgres();
+const sql =
+  process.env.NODE_ENV === 'production'
+    ? // Heroku needs SSL connections but
+      // has an "unauthorized" certificate
+      // https://devcenter.heroku.com/changelog-items/852
+      postgres({ ssl: { rejectUnauthorized: false } })
+    : postgres();
 
 // export const products = [
 //   {
