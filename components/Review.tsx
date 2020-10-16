@@ -1,5 +1,7 @@
 import React, {
   useState,
+  useCallback,
+  useEffect,
   Dispatch,
   SetStateAction,
   FunctionComponent,
@@ -12,6 +14,7 @@ type ReviewProps = {
   edited: Boolean;
   setEdited: Dispatch<SetStateAction<boolean>>;
   setReviewsByProductId: Dispatch<SetStateAction<Reviews>>;
+  reviewsByProductId: Review[];
   setLoading: Dispatch<SetStateAction<boolean>>;
   loading: boolean;
 };
@@ -20,6 +23,7 @@ export const SingleReview: FunctionComponent<ReviewProps> = ({
   rev,
   edited,
   setEdited,
+  reviewsByProductId,
   setReviewsByProductId,
   setLoading,
 }) => {
@@ -39,6 +43,21 @@ export const SingleReview: FunctionComponent<ReviewProps> = ({
     }
     return output;
   };
+
+  const index = reviewsByProductId.indexOf(rev);
+
+  // const deleteReview = useCallback(() => {
+  //   setReviewsByProductId(reviewsByProductId.splice(index, 1));
+  // }, [reviewsByProductId, index]);
+
+  // // const deleteReview = () => {
+  // //   setReviewsByProductId(reviewsByProductId.splice(index, 1));
+  // // };
+
+  // useEffect(() => {
+  //   deleteReview();
+  // }, [deleteReview]);
+
   return (
     <>
       {!editReview ? (
@@ -77,7 +96,10 @@ export const SingleReview: FunctionComponent<ReviewProps> = ({
               await fetch(`/api/reviews/${rev.reviewId}`, {
                 method: 'DELETE',
               });
-              setLoading(false);
+              setEditReview(!editReview);
+              // deleteReview();
+
+              // setEdited(!edited);
             }}
           >
             Delete

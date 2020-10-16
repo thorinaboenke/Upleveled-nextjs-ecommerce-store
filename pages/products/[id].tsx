@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import styles from '../../styles/Home.module.css';
 import { Layout } from '../../components/Layout';
 import AddToCart from '../../components/AddToCart';
@@ -33,8 +33,15 @@ export default function ProductPage(props: ProductPageProps) {
   const [reviewsByProductId, setReviewsByProductId] = useState(
     props.reviewsByProductId,
   );
-
   const [loading, setLoading] = useState(false);
+
+  const updateReviews = useCallback(() => {
+    setReviewsByProductId(props.reviewsByProductId);
+  }, [props.reviewsByProductId]);
+
+  useEffect(() => {
+    updateReviews();
+  }, [updateReviews]);
 
   const products = props.products;
   //make array with all the avaiable product ids
@@ -90,8 +97,6 @@ export default function ProductPage(props: ProductPageProps) {
   };
 
   async function onSubmit(values: FormValues) {
-    setLeaveReview(!leaveReview);
-
     const response = await fetch(`/api/reviews`, {
       method: 'POST',
       headers: {
@@ -105,7 +110,13 @@ export default function ProductPage(props: ProductPageProps) {
         },
       }),
     });
+
+    setEdited(!edited);
+    updateReviews();
     const newReview: Review = (await response.json()).review;
+    setReviewsByProductId([newReview, ...reviewsByProductId]);
+    setLeaveReview(false);
+    return newReview;
   }
   const radioOptions = [
     {
@@ -217,13 +228,14 @@ export default function ProductPage(props: ProductPageProps) {
                     setLoading={setLoading}
                     loading={loading}
                     setReviewsByProductId={setReviewsByProductId}
+                    reviewsByProductId={reviewsByProductId}
                   />
                 </div>
               );
             })}
-            {reviewsByProductId.length > 3 && (
+            {reviewsByProductId.length > defaultNumberOfReviewsToShow && (
               <button onClick={() => setShowMore(!showMore)}>
-                {showMore ? 'Show less' : 'Show more'}
+                {showMore ? 'Show fewer reviews' : 'Show more reviews'}
               </button>
             )}
           </div>
