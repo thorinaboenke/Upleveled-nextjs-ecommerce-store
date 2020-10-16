@@ -1,7 +1,7 @@
 import postgres from 'postgres';
 import dotenv from 'dotenv';
 import camelcaseKeys from 'camelcase-keys';
-import { Id, Review, Reviews } from './types';
+import { Id, ProductList, Review, Reviews } from './types';
 import extractHerokuDatabaseEnvVars from './extractHerokuDatabaseEnvVars';
 
 extractHerokuDatabaseEnvVars();
@@ -85,14 +85,14 @@ const sql =
 // ];
 
 export async function getProducts() {
-  const allProducts = sql`
+  const allProducts = sql<ProductList>`
   SELECT * FROM products;`;
   return allProducts;
 }
 
 export async function getProductById(id: Id) {
   if (!/^\d+$/.test(id.toString())) return undefined;
-  const products = await sql`
+  const products = await sql<ProductList>`
 SELECT * FROM products WHERE
 id = ${id}`;
   console.log('get product by id:', products[0]);
@@ -135,14 +135,14 @@ export async function addProduct() {}
 // }
 
 export async function getReviews() {
-  const allReviews: Reviews = await sql`
+  const allReviews = await sql<Reviews>`
   SELECT * from reviews;`;
   return allReviews.map((r) => camelcaseKeys(r));
 }
 
 export async function getReviewsByProductId(p_id: Id) {
   if (!/^\d+$/.test(p_id.toString())) return undefined;
-  const reviewsByProductId: Reviews = await sql`
+  const reviewsByProductId = await sql<Reviews>`
   SELECT * from reviews WHERE product_id = ${p_id};`;
   if (reviewsByProductId) {
     return reviewsByProductId.map((r) => camelcaseKeys(r));
@@ -150,14 +150,14 @@ export async function getReviewsByProductId(p_id: Id) {
 }
 export async function getReviewsByUserId(u_id: Id) {
   if (!/^\d+$/.test(u_id.toString())) return undefined;
-  const reviewsByUserId: Reviews = await sql`
+  const reviewsByUserId = await sql<Reviews>`
   SELECT * from reviews WHERE user_id = ${u_id};`;
   return reviewsByUserId.map((r) => camelcaseKeys(r));
 }
 
 export async function getReviewById(r_id: Id) {
   if (!/^\d+$/.test(r_id.toString())) return undefined;
-  const reviewByReviewId: Reviews = await sql`
+  const reviewByReviewId = await sql<Reviews>`
   SELECT * from reviews WHERE review_id = ${r_id};`;
   return reviewByReviewId.map((r) => camelcaseKeys(r))[0];
 }
@@ -177,7 +177,7 @@ export async function insertReview(review: Review) {
   //   return undefined;
   // }
 
-  const reviews: Reviews = await sql`
+  const reviews = await sql<Reviews>`
 INSERT INTO reviews
 (product_id, rating, review_text )
 VALUES
@@ -187,7 +187,7 @@ RETURNING *;`;
 }
 
 export async function deleteReviewById(r_id: Id) {
-  const reviews: Reviews = await sql`
+  const reviews = await sql<Reviews>`
 DELETE FROM reviews
 WHERE review_id = ${r_id}
 RETURNING *;
@@ -218,7 +218,7 @@ export async function updateReviewById(r_id: Id, review: Review) {
   let reviews: Reviews = [];
 
   if ('reviewText' in review) {
-    reviews = await sql`
+    reviews = await sql<Reviews>`
       UPDATE reviews
         SET review_text = ${review.reviewText}
         WHERE review_id = ${r_id}
@@ -227,7 +227,7 @@ export async function updateReviewById(r_id: Id, review: Review) {
   }
 
   if ('rating' in review) {
-    reviews = await sql`
+    reviews = await sql<Reviews>`
       UPDATE reviews
         SET rating = ${review.rating}
         WHERE review_id = ${r_id}

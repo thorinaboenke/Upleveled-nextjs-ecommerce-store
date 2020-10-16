@@ -74,7 +74,7 @@ export function calculateTotalItemsInCart(cart: ProductCart) {
     return 0;
   }
   const totalItems = cart.reduce((acc, curr) => {
-    return acc + parseInt(curr.amount);
+    return acc + curr.amount;
   }, 0);
   return totalItems;
 }

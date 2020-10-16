@@ -6,6 +6,7 @@ import styles from '../../styles/Home.module.css';
 import AddToCart from '../../components/AddToCart';
 import nextCookies from 'next-cookies';
 import { ProductCart, ProductList } from '../../utils/types';
+import { GetServerSidePropsContext } from 'next';
 
 type ProductProps = {
   cartFromCookies: ProductCart;
@@ -106,7 +107,6 @@ export default function Products(props: ProductProps) {
             />
           </div>
 
-          <button onClick={(e) => handleSearchChange(e)}>Search</button>
           <div className={styles.outerflexcontainer}>
             {allProducts.map((product) => {
               return (
@@ -134,8 +134,8 @@ export default function Products(props: ProductProps) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const { getProducts } = await import('../../utils/database.ts');
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { getProducts } = await import('../../utils/database');
   const products = await getProducts();
   const allCookies = nextCookies(context);
   const cartFromCookies = allCookies.cart || [];
