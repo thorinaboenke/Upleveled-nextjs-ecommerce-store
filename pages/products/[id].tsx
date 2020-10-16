@@ -8,6 +8,7 @@ import FormikControl from '../../components/formik/FormikControl';
 import { Formik, Form } from 'formik';
 import SingleReview from '../../components/Review';
 import {
+  Id,
   Product,
   ProductCart,
   ProductList,
@@ -237,7 +238,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { getProductById } = await import('../../utils/database');
   const { getProducts } = await import('../../utils/database');
   const products = await getProducts();
-  const allProductIds = products.map((product: Product) => product.id);
+  const allProductIds: Id[] = products.map((product: Product) => product.id);
   const product = await getProductById(
     allProductIds[Number(context.query.id) - 1],
   );
