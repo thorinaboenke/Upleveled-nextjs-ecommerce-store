@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import styles from '../styles/Home.module.css';
 import { calculateTotalItemsInCart } from '../utils/cookies';
+import { ProductCart } from '../utils/types';
 
 type NavBarProps = {
   cart: ProductCart;
