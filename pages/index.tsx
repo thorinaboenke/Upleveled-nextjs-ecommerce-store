@@ -19,7 +19,7 @@ type HomeProps = {
   cartFromCookies: ProductCart;
 };
 
-export default function Home(props: HomeProps) {
+export default function HomePage(props: HomeProps) {
   const [cart] = useState(props.cartFromCookies);
   return (
     <>
@@ -32,7 +32,7 @@ export default function Home(props: HomeProps) {
           <h1 className={styles.heading}>
             We have the droids you're looking for!
           </h1>
-          <img className={styles.peek} src="/peek.png" alt=""></img>
+          <img className={styles.peek} src="/peek.png" alt="" />
           <div className={styles.section1}>
             <h3>High quality second hand droids</h3>
             <h2>

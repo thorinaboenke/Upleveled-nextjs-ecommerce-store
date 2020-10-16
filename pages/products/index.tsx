@@ -13,7 +13,7 @@ type ProductProps = {
   products: ProductList;
 };
 
-export default function Products(props: ProductProps) {
+export default function ProductsPage(props: ProductProps) {
   const [cart, setCart] = useState(props.cartFromCookies);
   const [allProducts, setAllProducts] = useState(props.products);
   const [value] = useState('');

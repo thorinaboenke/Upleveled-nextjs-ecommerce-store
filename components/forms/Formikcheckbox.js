@@ -18,7 +18,7 @@ function FormikCheckbox(props) {
                   {...field}
                   value={option.value}
                   checked={field.value.includes(option.value)}
-                ></input>
+                />
                 <label htmlFor={option.value}>{option.key}</label>
               </React.Fragment>
             );

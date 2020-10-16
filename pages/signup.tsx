@@ -2,7 +2,7 @@ import Head from 'next/head';
 
 import FormikSignup from '../components/Signup';
 
-export default function SignUp() {
+export default function SignUpPage() {
   return (
     <>
       <Head>

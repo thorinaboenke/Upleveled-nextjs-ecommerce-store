@@ -18,7 +18,7 @@ type CheckoutProps = {
   products: ProductList;
 };
 
-export default function checkout(props: CheckoutProps) {
+export default function CheckoutPage(props: CheckoutProps) {
   const [cart] = useState(props.cartFromCookies);
   const products = props.products || [];
 

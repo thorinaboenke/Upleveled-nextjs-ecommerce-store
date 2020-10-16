@@ -1,6 +1,6 @@
 import styles from '../styles/Home.module.css';
 import * as Yup from 'yup';
-import FormikControl from './formik/FormikControl';
+import FormikControl from './forms/FormikControl';
 
 import { Formik, Form, useField } from 'formik';
 

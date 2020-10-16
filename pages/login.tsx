@@ -2,7 +2,7 @@ import Head from 'next/head';
 import React from 'react';
 import FormikLogin from '../components/Login';
 
-export default function login() {
+export default function LoginPage() {
   return (
     <div>
       <Head>

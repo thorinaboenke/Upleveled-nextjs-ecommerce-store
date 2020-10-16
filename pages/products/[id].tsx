@@ -4,7 +4,7 @@ import { Layout } from '../../components/Layout';
 import AddToCart from '../../components/AddToCart';
 import nextCookies from 'next-cookies';
 import Link from 'next/link';
-import FormikControl from '../../components/formik/FormikControl';
+import FormikControl from '../../components/forms/FormikControl';
 import { Formik, Form } from 'formik';
 import SingleReview from '../../components/Review';
 import {
@@ -25,7 +25,7 @@ type ProductPageProps = {
   index: string;
 };
 
-export default function Productpage(props: ProductPageProps) {
+export default function ProductPage(props: ProductPageProps) {
   const [cart, setCart] = useState(props.cartFromCookies);
   const [leaveReview, setLeaveReview] = useState(false);
   const [showMore, setShowMore] = useState(false);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import FormikControl from './formik/FormikControl';
+import FormikControl from './forms/FormikControl';
 import Link from 'next/link';
 
 export default function FormikSignup() {

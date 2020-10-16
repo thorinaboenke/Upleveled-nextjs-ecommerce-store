@@ -10,7 +10,7 @@ type CartProps = {
   cartFromCookies: ProductCart;
   products: ProductList;
 };
-export default function cart(props: CartProps) {
+export default function CartPage(props: CartProps) {
   const [shoppingcart, setShoppingcart] = useState(props.cartFromCookies);
   const products = props.products;
 
