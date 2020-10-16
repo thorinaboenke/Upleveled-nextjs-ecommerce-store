@@ -238,7 +238,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { getProductById } = await import('../../utils/database');
   const { getProducts } = await import('../../utils/database');
   const products = await getProducts();
-  const allProductIds: Id[] = products.map((product: Product) => product.id);
+  const allProductIds: any = products.map((product: Product) => product.id);
   const product = await getProductById(
     allProductIds[Number(context.query.id) - 1],
   );
