@@ -1,5 +1,5 @@
-import Footer from './Footer.tsx';
-import Header from './Header.tsx';
+import Footer from './Footer';
+import Header from './Header';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import { ProductCart } from '../utils/types';
