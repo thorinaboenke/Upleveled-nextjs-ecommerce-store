@@ -13,6 +13,11 @@ const planetQuery = gql`
   }
 `;
 
+type Planet = {
+  id: number;
+  name: string;
+};
+
 export default function Planets() {
   const { loading, error, data } = useQuery(planetQuery);
   if (loading) return <div>Loading...</div>;
@@ -20,7 +25,7 @@ export default function Planets() {
 
   return (
     <div className={styles.planetcontainer}>
-      {data.allPlanets.planets.map((planet) =>
+      {data.allPlanets.planets.map((planet: Planet) =>
         planet.name === 'unknown' || planet.name === 'Alderaan' ? null : (
           <div key={planet.id} className={styles.planet}>
             {planet.name}
