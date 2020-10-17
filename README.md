@@ -1,17 +1,18 @@
 # Next.js E-commerce Store
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## C
 
-## Running on the development server
+## Getting started
 
 Clone the repository
 ```bash
 git clone https://github.com/thorinaboenke/nextjs-ecommerce-store
 ```
-run yarn 
+run yarn or npm
 ```bash
 yarn
+# or
+npm
 ```
 start the development server:
 
