@@ -8,7 +8,7 @@ Clone the repository
 ```bash
 git clone https://github.com/thorinaboenke/nextjs-ecommerce-store
 ```
-in the created directory, run yarn or npm to install all dependencies
+in the created directory, run yarn or npm to install the dependencies
 ```bash
 yarn
 # or
