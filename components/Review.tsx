@@ -44,19 +44,25 @@ export const SingleReview: FunctionComponent<ReviewProps> = ({
     return output;
   };
 
-  const index = reviewsByProductId.indexOf(rev);
-
+  // we need a function to delete the review: call setReviewsByProduct Id on the List of reviews with the deleted one spliced out, wrapped in a callback
+  // const index = reviewsByProductId.indexOf(rev);
   // const deleteReview = useCallback(() => {
   //   setReviewsByProductId(reviewsByProductId.splice(index, 1));
-  // }, [reviewsByProductId, index]);
+  // }, [reviewsByProductId, index, setReviewsByProductId]);
 
-  // // const deleteReview = () => {
-  // //   setReviewsByProductId(reviewsByProductId.splice(index, 1));
-  // // };
+  const index = reviewsByProductId.indexOf(rev);
+  const deleteReview = useCallback(() => {
+    setReviewsByProductId(
+      reviewsByProductId.filter((item, ind) => {
+        return ind !== index;
+      }),
+    );
+  }, [reviewsByProductId, index, setReviewsByProductId]);
 
-  // useEffect(() => {
-  //   deleteReview();
-  // }, [deleteReview]);
+  // // we need a function that updates the Review list with the changed Item
+  // const updateReview = useCallback(() => {
+  //   setReviewsByProductId([...reviewsByProductId, enter updated review here ]);
+  // }, [reviewsByProductId, setReviewsByProductId]);
 
   return (
     <>
@@ -96,10 +102,17 @@ export const SingleReview: FunctionComponent<ReviewProps> = ({
               await fetch(`/api/reviews/${rev.reviewId}`, {
                 method: 'DELETE',
               });
-              setEditReview(!editReview);
-              // deleteReview();
+              setEditReview(false);
+              deleteReview();
 
-              // setEdited(!edited);
+              // setReviewsByProductId(reviewsByProductId.splice(index, 1));
+              setReviewsByProductId(
+                reviewsByProductId.filter((item, ind) => {
+                  return ind !== index;
+                }),
+              );
+
+              setEdited(!edited);
             }}
           >
             Delete
@@ -124,8 +137,8 @@ export const SingleReview: FunctionComponent<ReviewProps> = ({
                 JSON.stringify({
                   review: { reviewText: text, rating: rating },
                 }),
-              );
-              setEditReview(!editReview);
+              ); // save returned review to variable, call update function AND update list here, set edited
+              setEditReview(false);
             }}
           >
             Save Changes
