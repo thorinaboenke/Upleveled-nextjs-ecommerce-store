@@ -59,10 +59,16 @@ export const SingleReview: FunctionComponent<ReviewProps> = ({
     );
   }, [reviewsByProductId, index, setReviewsByProductId]);
 
-  // // we need a function that updates the Review list with the changed Item
-  // const updateReview = useCallback(() => {
-  //   setReviewsByProductId([...reviewsByProductId, enter updated review here ]);
-  // }, [reviewsByProductId, setReviewsByProductId]);
+  // we need a function that updates the Review list with the changed Item
+  const updateReview = useCallback(() => {
+    setReviewsByProductId(
+      reviewsByProductId.map((review) =>
+        review.reviewId !== rev.reviewId
+          ? review
+          : { ...review, rating: rating, reviewText: text },
+      ),
+    );
+  }, [reviewsByProductId, setReviewsByProductId, rating, text, rev.reviewId]);
 
   return (
     <>
@@ -133,11 +139,7 @@ export const SingleReview: FunctionComponent<ReviewProps> = ({
                   review: { reviewText: text, rating: rating },
                 }),
               });
-              console.log(
-                JSON.stringify({
-                  review: { reviewText: text, rating: rating },
-                }),
-              ); // save returned review to variable, call update function AND update list here, set edited
+              updateReview();
               setEditReview(false);
             }}
           >
