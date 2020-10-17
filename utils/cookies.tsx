@@ -98,8 +98,9 @@ export function calculateTotalwithShipping(
 
 export function calculateTotal(cartForTotal: ProductCart, prod: ProductList) {
   if (prod.length === 0 || cartForTotal.length === 0) {
-    return undefined;
-  } else if (Array.isArray(prod) && Array.isArray(cartForTotal)) {
+    return 0;
+  }
+  if (Array.isArray(prod) && Array.isArray(cartForTotal)) {
     const total = cartForTotal.reduce((acc, curr) => {
       return (
         acc +

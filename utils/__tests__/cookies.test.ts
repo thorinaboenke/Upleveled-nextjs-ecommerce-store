@@ -80,7 +80,7 @@ test('deletes Item from Cart', () => {
 
 test('calculates the Total from a Shopping Cart and Product List', () => {
   const totalEmptyProductList = calculateTotal(cartWithItem, []);
-  expect(totalEmptyProductList).toBe(undefined);
+  expect(totalEmptyProductList).toBe(0);
   const total = calculateTotal(
     [
       { id: 1, amount: 1 },
