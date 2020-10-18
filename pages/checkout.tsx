@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import Link from 'next/link';
-import {Layout} from '../components/Layout';
+import { Layout } from '../components/Layout';
 import Checkout from '../components/Checkout';
 import nextCookies from 'next-cookies';
 import {
@@ -19,7 +19,7 @@ type CheckoutProps = {
 };
 
 export default function CheckoutPage(props: CheckoutProps) {
-  const [cart] = useState(props.cartFromCookies);
+  const [cart] = useState(props.cartFromCookies || []);
   const products = props.products || [];
 
   const shippingFee = 49;

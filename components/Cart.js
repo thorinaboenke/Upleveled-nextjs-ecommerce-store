@@ -83,9 +83,7 @@ export const Cart = ({ cart, setCart, databaseproducts }) => {
           <div>
             <div className={styles.subtotal}>
               Shipping Fees:{' '}
-              {calculateTotal(cart, products) || 0 > minOrderValue
-                ? 0
-                : shippingFee}
+              {calculateTotal(cart, products) > minOrderValue ? 0 : shippingFee}
             </div>
           </div>
           <div>

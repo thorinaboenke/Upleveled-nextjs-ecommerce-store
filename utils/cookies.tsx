@@ -92,7 +92,7 @@ export function calculateTotalwithShipping(
   if (typeof amount === 'string') {
     return amount;
   }
-  if (amount || 0 < minimumOrderValue) {
+  if (amount < minimumOrderValue) {
     return amount + shippingFees;
   } else {
     return amount;
