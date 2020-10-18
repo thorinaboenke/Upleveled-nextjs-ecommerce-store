@@ -5,20 +5,16 @@ import { removeItemFromCartInCookie } from '../utils/cookies';
 import { updateAmountInCartInCookie } from '../utils/cookies';
 import { getCartFromCookies } from '../utils/cookies';
 import { calculateTotal, calculateTotalwithShipping } from '../utils/cookies';
-import { ProductCart, ProductList } from '../utils/types';
-import { Dispatch, FunctionComponent, SetStateAction } from 'react';
+// import { ProductCart, ProductList } from '../utils/types';
+// import { Dispatch, FunctionComponent, SetStateAction } from 'react';
 
-type CartProps = {
-  cart: ProductCart;
-  setCart: Dispatch<SetStateAction<ProductCart>>;
-  databaseproducts: ProductList;
-};
+// type CartProps = {
+//   cart: ProductCart;
+//   setCart: Dispatch<SetStateAction<ProductCart>>;
+//   databaseproducts: ProductList;
+// };
 
-export const Cart: FunctionComponent<CartProps> = ({
-  cart,
-  setCart,
-  databaseproducts,
-}) => {
+export const Cart = ({ cart, setCart, databaseproducts }) => {
   const shippingFee = 49;
   const minOrderValue = 499;
   const products = databaseproducts;
@@ -87,14 +83,16 @@ export const Cart: FunctionComponent<CartProps> = ({
           <div>
             <div className={styles.subtotal}>
               Shipping Fees:{' '}
-              {calculateTotal(cart, products) > minOrderValue ? 0 : shippingFee}
+              {calculateTotal(cart, products) || 0 > minOrderValue
+                ? 0
+                : shippingFee}
             </div>
           </div>
           <div>
             <div className={styles.total}>
               Total:{' '}
               {calculateTotalwithShipping(
-                calculateTotal(cart, databaseproducts),
+                calculateTotal(cart, products),
                 minOrderValue,
                 shippingFee,
               )}

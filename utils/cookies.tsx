@@ -85,11 +85,14 @@ export function calculateTotalItemsInCart(cart: ProductCart) {
 }
 
 export function calculateTotalwithShipping(
-  amount: number,
+  amount: number | string,
   minimumOrderValue: number,
   shippingFees: number,
 ) {
-  if (amount < minimumOrderValue) {
+  if (typeof amount === 'string') {
+    return amount;
+  }
+  if (amount || 0 < minimumOrderValue) {
     return amount + shippingFees;
   } else {
     return amount;
@@ -100,13 +103,13 @@ export function calculateTotal(cartForTotal: ProductCart, prod: ProductList) {
   if (cartForTotal.length === 0) {
     return 0;
   }
-  const pricelistIdsMatch = cartForTotal.map((item) => {
+  const priceListIdsMatch = cartForTotal.map((item) => {
     return prod.some((product) => product.id === item.id);
   });
   // gives out array with true or false
   // check if every prodcut ID in the cart present in the Productlist, not the case if pricelistIdsMatch contains false
 
-  if (pricelistIdsMatch.some((item) => item === false)) {
+  if (priceListIdsMatch.some((item) => item === false)) {
     return 'Cannot find price for some products';
   }
 
@@ -114,10 +117,9 @@ export function calculateTotal(cartForTotal: ProductCart, prod: ProductList) {
     const total = cartForTotal.reduce((acc, curr) => {
       return (
         acc +
-        curr.amount * prod?.find((product) => product.id === curr.id)!.price
+        curr.amount * prod.find((product) => product.id === curr.id)!.price
       );
     }, 0);
-    console.log(prod);
     return total;
   }
 }
