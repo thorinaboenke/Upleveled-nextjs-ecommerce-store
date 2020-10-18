@@ -85,7 +85,7 @@ export function calculateTotalItemsInCart(cart: ProductCart) {
 }
 
 export function calculateTotalwithShipping(
-  amount: number | string,
+  amount: any,
   minimumOrderValue: number,
   shippingFees: number,
 ) {

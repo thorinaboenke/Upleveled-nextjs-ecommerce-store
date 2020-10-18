@@ -22,8 +22,8 @@ export default function CheckoutPage(props: CheckoutProps) {
   const [cart] = useState(props.cartFromCookies);
   const products = props.products || [];
 
-  const shippingFee: number = 49;
-  const minOrderValue: number = 499;
+  const shippingFee = 49;
+  const minOrderValue = 499;
 
   if (cart.length > 0) {
     return (
