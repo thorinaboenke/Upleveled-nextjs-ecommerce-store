@@ -97,9 +97,19 @@ export function calculateTotalwithShipping(
 }
 
 export function calculateTotal(cartForTotal: ProductCart, prod: ProductList) {
-  if (prod.length === 0 || cartForTotal.length === 0) {
+  if (cartForTotal.length === 0) {
     return 0;
   }
+  const pricelistIdsMatch = cartForTotal.map((item) => {
+    return prod.some((product) => product.id === item.id);
+  });
+  // gives out array with true or false
+  // check if every prodcut ID in the cart present in the Productlist, not the case if pricelistIdsMatch contains false
+
+  if (pricelistIdsMatch.some((item) => item === false)) {
+    return 'Cannot find price for some products';
+  }
+
   if (Array.isArray(prod) && Array.isArray(cartForTotal)) {
     const total = cartForTotal.reduce((acc, curr) => {
       return (

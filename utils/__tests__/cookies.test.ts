@@ -79,8 +79,25 @@ test('deletes Item from Cart', () => {
 });
 
 test('calculates the Total from a Shopping Cart and Product List', () => {
-  const totalEmptyProductList = calculateTotal(cartWithItem, []);
-  expect(totalEmptyProductList).toBe(0);
+  const totalEmptyCart = calculateTotal([], products);
+  expect(totalEmptyCart).toBe(0);
+  const totalPriceIdMissing = calculateTotal(
+    [
+      { id: 1, amount: 1 },
+      { id: 2, amount: 1 },
+    ],
+    [
+      {
+        id: 2,
+        name: 'R2D2',
+        description: 'Astromech droid for machanic and co-pilot duties',
+        price: 200,
+        url: '/R2D2.png',
+      },
+    ],
+  );
+  expect(totalPriceIdMissing).toBe('Cannot find price for some products');
+
   const total = calculateTotal(
     [
       { id: 1, amount: 1 },

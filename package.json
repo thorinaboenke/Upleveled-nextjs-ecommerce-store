@@ -8,7 +8,8 @@
     "start": "next start -p ${PORT:-\"3000\"}",
     "heroku-postbuild": "yarn migrate up && yarn build",
     "migrate": "dotenv ley",
-    "test": "jest"
+    "test": "jest",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@apollo/client": "^3.2.2",
@@ -36,6 +37,7 @@
     "@typescript-eslint/parser": "4.2.0",
     "@upleveled/eslint-config-upleveled": "^1.0.6",
     "babel-eslint": "10.1.0",
+    "cypress": "^5.4.0",
     "eslint": "6.6.0",
     "eslint-config-react-app": "5.2.1",
     "eslint-import-resolver-typescript": "^2.3.0",
