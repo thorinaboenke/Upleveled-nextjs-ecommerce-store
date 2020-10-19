@@ -27,7 +27,9 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.js",
-    "drafts/checkout_backup.txt"
+    "drafts/checkout_backup.txt",
+    ".eslintrc.js",
+    "*.config.js"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["cypress", "node_modules"]
 }

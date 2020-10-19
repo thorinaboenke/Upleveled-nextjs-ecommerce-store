@@ -32,9 +32,9 @@ export default function CheckoutPage(props: CheckoutProps) {
           <title>JAWA Merch - Checkout</title>
         </Head>
         <Layout cart={cart}>
-          <h1>Checkout</h1>
+          <h1 data-cy="checkout-heading">Checkout</h1>
           <img src="/bb8logo.png" alt="bb8" className={styles.checkoutimg} />
-          <div>Your cart: {calculateTotalItemsInCart(cart)} items</div>{' '}
+          <div>Items in your cart: {calculateTotalItemsInCart(cart)}</div>{' '}
           <div>
             Total Amount to pay:{' '}
             {calculateTotalwithShipping(

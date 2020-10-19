@@ -8,8 +8,7 @@
     "start": "next start -p ${PORT:-\"3000\"}",
     "heroku-postbuild": "yarn migrate up && yarn build",
     "migrate": "dotenv ley",
-    "test": "jest",
-    "cypress:open": "cypress open"
+    "test": "jest"
   },
   "dependencies": {
     "@apollo/client": "^3.2.2",

@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { Layout } from '../components/Layout';
+import styles from '../styles/Home.module.css';
 
 export default function ThankyouPage() {
   return (
@@ -11,9 +12,9 @@ export default function ThankyouPage() {
       </Head>
       <Layout cart={[]}>
         <h1>Thank you for your purchase</h1>
-        <img src="/head.png" alt="jawa head" />
+        <img src="/head.png" alt="jawa head" className="imgthankyou" />
         <Link href="/products">
-          <a>Back to Store</a>
+          <a className="checkoutbutton">Back to Store</a>
         </Link>
       </Layout>
     </div>

@@ -148,3 +148,8 @@ select {
 .radio-choice-outer-wrapper {
   display: flex;
 }
+
+.imgthankyou {
+  margin: 2em;
+  width: 300px;
+}

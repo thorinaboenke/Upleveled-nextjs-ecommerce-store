@@ -18,14 +18,14 @@ export default function NavBar(props: NavBarProps) {
       </Link>
       <div className={styles.links}>
         <Link href="/">
-          <a>Home</a>
+          <a data-cy="header-link-home">Home</a>
         </Link>
         <Link href="/products">
-          <a>Products</a>
+          <a data-cy="header-link-products">Products</a>
         </Link>
         <Link href="/cart">
-          <a>
-            <div aria-label="total items in cart">
+          <a data-cy="header-link-cart">
+            <div data-cy="header-items-in-cart" aria-label="total items in cart">
               {`    ` + calculateTotalItemsInCart(props.cart)}
             </div>
             <img src="/cart.svg" alt="cart" height="20px" />
@@ -33,7 +33,7 @@ export default function NavBar(props: NavBarProps) {
         </Link>
 
         <Link href="/checkout">
-          <a>Checkout</a>
+          <a data-cy="header-link-checkout">Checkout</a>
         </Link>
       </div>
     </div>

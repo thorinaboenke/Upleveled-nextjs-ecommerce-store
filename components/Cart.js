@@ -98,7 +98,9 @@ export const Cart = ({ cart, setCart, databaseproducts }) => {
           </div>
         </div>
         <div className={styles.cartsummary}>
-          <div>Items: {calculateTotalItemsInCart(cart)}</div>
+          <div data-cy="cart-items-in-cart">
+            Items: {calculateTotalItemsInCart(cart)}
+          </div>
           <Link href="./checkout">
             <button className="checkoutbutton">Go to Checkout</button>
           </Link>

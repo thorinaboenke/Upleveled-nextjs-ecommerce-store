@@ -37,3 +37,6 @@ yarn-error.log*
 
 #drafts
 /drafts
+
+#cypress
+cypress/integration/examples
