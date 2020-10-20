@@ -29,24 +29,24 @@ In there run
 
 ```sql
 CREATE DATABASE <database_name>;
-CREATE USER <user name> WITH ENCRYPTED PASSWORD '<user password>';
-GRANT ALL PRIVILEGES ON DATABASE <database name> TO <user name>;
+CREATE USER <user_name> WITH ENCRYPTED PASSWORD '<user_password>';
+GRANT ALL PRIVILEGES ON DATABASE <database_name> TO <user_name>;
 ```
-replacing <database name>, <user name>, <user password> with the names you choose for the database
+replacing <database_name>, <user_name>, <user_password> with the names you choose for the database
 
-Add the file .env in the project root, replacing <database_name> with the name you shoose for the database.
+Add the file .env in the project root, replacing <database_name> with the name you choose for the database.
 Then, to connect to the new database quit psql and reconnect
 
 ```sql
 \q
-psql -U <user name> <database name>
+psql -U <user_name> <database_name>
 ```
 
 ```sh
 PGHOST=localhost
-PGDATABASE=<password name>
-PGUSERNAME=<user name>
-PGPASSWORD=<user password>
+PGDATABASE=<password_name>
+PGUSERNAME=<user_name>
+PGPASSWORD=<user_password>
 ```
 
 Run the migrations
