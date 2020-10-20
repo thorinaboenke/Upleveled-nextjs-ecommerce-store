@@ -19,7 +19,7 @@ npm
 
 ## Set up the database
 
-Set up the database:
+For setting up the database locally in this way this way you need to have PostgresQL installed.
 
 ```sh
 psql postgres
@@ -29,18 +29,24 @@ In there run
 
 ```sql
 CREATE DATABASE <database_name>;
-CREATE USER todos_next WITH ENCRYPTED PASSWORD '<database_name>';
-GRANT ALL PRIVILEGES ON DATABASE <database_name> TO <database_name>;
+CREATE USER <user name> WITH ENCRYPTED PASSWORD '<user password>';
+GRANT ALL PRIVILEGES ON DATABASE <database name> TO <user name>;
 ```
-replacing <database_name> with the name you shoose for the database
+replacing <database name>, <user name>, <user password> with the names you choose for the database
 
-Add the file .env in the project root, replacing <database_name> with the name you shoose for the databas.
+Add the file .env in the project root, replacing <database_name> with the name you shoose for the database.
+Then, to connect to the new database quit psql and reconnect
+
+```sql
+\q
+psql -U <user name> <database name>
+```
 
 ```sh
 PGHOST=localhost
-PGDATABASE=<database_name>
-PGUSERNAME=<database_name>
-PGPASSWORD=<database_name>
+PGDATABASE=<password name>
+PGUSERNAME=<user name>
+PGPASSWORD=<user password>
 ```
 
 Run the migrations
