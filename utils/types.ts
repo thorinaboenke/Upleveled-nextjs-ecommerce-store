@@ -9,6 +9,14 @@ export type Product = {
   price: Price;
   url: string;
 };
+export type MergedProduct = {
+  id: Id;
+  name: string;
+  description: string;
+  price: Price;
+  url: string;
+  amount: number;
+};
 
 export type ProductList = Product[];
 

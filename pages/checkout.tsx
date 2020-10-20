@@ -10,17 +10,15 @@ import {
   calculateTotalItemsInCart,
   calculateTotalwithShipping,
 } from '../utils/cookies';
-import { ProductCart, ProductList } from '../utils/types';
+import { MergedProduct, ProductInCart } from '../utils/types';
 import { GetServerSidePropsContext } from 'next';
 
 type CheckoutProps = {
-  cartFromCookies: ProductCart;
-  products: ProductList;
+  mergedCart: MergedProduct[];
 };
 
 export default function CheckoutPage(props: CheckoutProps) {
-  const [cart] = useState(props.cartFromCookies || []);
-  const products = props.products || [];
+  const [cart] = useState(props.mergedCart || []);
 
   const shippingFee = 49;
   const minOrderValue = 499;
@@ -38,7 +36,7 @@ export default function CheckoutPage(props: CheckoutProps) {
           <div>
             Total Amount to pay:{' '}
             {calculateTotalwithShipping(
-              calculateTotal(cart, products),
+              calculateTotal(cart),
               minOrderValue,
               shippingFee,
             )}{' '}
@@ -69,15 +67,28 @@ export default function CheckoutPage(props: CheckoutProps) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { getProducts } = await import('../utils/database');
-  const products = await getProducts();
+  const { getProductsByIds } = await import('../utils/database');
   const allCookies = nextCookies(context);
-  const cartFromCookies = allCookies.cart || [];
-  console.log(cartFromCookies);
+  const cartFromCookies = (allCookies.cart as unknown) as ProductInCart[];
+
+  const idsToFetch = cartFromCookies.map((item) => item.id);
+  const productsByIds = await getProductsByIds(idsToFetch);
+  const mergedCart: MergedProduct[] = [];
+  // merge cart from cookies and price from ProductsByIds
+  for (let i = 0; i < productsByIds.length; i++) {
+    const test = cartFromCookies.find(
+      (itemInCart: any) => itemInCart.id === productsByIds[i].id,
+    );
+    if (test) {
+      mergedCart.push({
+        ...productsByIds[i],
+        ...test,
+      });
+    }
+  }
   return {
     props: {
-      cartFromCookies: cartFromCookies,
-      products: products,
+      mergedCart: mergedCart,
     },
   };
 }

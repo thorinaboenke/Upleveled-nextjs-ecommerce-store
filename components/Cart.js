@@ -1,23 +1,17 @@
 import styles from '../styles/Home.module.css';
 import Link from 'next/link';
-import { calculateTotalItemsInCart } from '../utils/cookies';
-import { removeItemFromCartInCookie } from '../utils/cookies';
-import { updateAmountInCartInCookie } from '../utils/cookies';
-import { getCartFromCookies } from '../utils/cookies';
-import { calculateTotal, calculateTotalwithShipping } from '../utils/cookies';
-// import { ProductCart, ProductList } from '../utils/types';
-// import { Dispatch, FunctionComponent, SetStateAction } from 'react';
+import {
+  calculateSubtotal,
+  updateAmountInCartInCookie,
+  removeItemFromCartInCookie,
+  calculateTotalItemsInCart,
+  calculateTotal,
+} from '../utils/cookies';
+import { calculateTotalwithShipping } from '../utils/cookies';
 
-// type CartProps = {
-//   cart: ProductCart;
-//   setCart: Dispatch<SetStateAction<ProductCart>>;
-//   databaseproducts: ProductList;
-// };
-
-export const Cart = ({ cart, setCart, databaseproducts }) => {
+export const Cart = ({ cart, setCart }) => {
   const shippingFee = 49;
   const minOrderValue = 499;
-  const products = databaseproducts;
 
   if (cart.length > 0) {
     return (
@@ -28,18 +22,10 @@ export const Cart = ({ cart, setCart, databaseproducts }) => {
             return (
               <div className={styles.itemcontainer} key={item.id}>
                 <div className={styles.imagecontainer}>
-                  <img
-                    alt=""
-                    src={
-                      products.find((product) => product.id === item.id)?.url
-                    }
-                    style={{ height: '100px' }}
-                  />
+                  <img alt="" src={item.url} style={{ height: '100px' }} />
                 </div>
                 <div className={styles.nameandquant}>
-                  <div className={styles.name}>
-                    {products.find((product) => product.id === item.id)?.name}
-                  </div>
+                  <div className={styles.name}>{item.name}</div>
 
                   <div className={styles.quant}>
                     Quantity:{' '}
@@ -52,14 +38,23 @@ export const Cart = ({ cart, setCart, databaseproducts }) => {
                           item.id,
                           parseInt(e.target.value),
                         );
-                        setCart(getCartFromCookies());
+                        setCart(
+                          cart.map((itemInMergedCart) =>
+                            itemInMergedCart.id !== item.id
+                              ? itemInMergedCart
+                              : {
+                                  ...itemInMergedCart,
+                                  amount: parseInt(e.target.value),
+                                },
+                          ),
+                        );
                       }}
                     />
                     <button
                       className={styles.removebutton}
                       onClick={() => {
                         removeItemFromCartInCookie(item.id);
-                        setCart(getCartFromCookies());
+                        setCart(cart.filter((i) => i.id !== item.id));
                       }}
                     >
                       Remove
@@ -68,13 +63,9 @@ export const Cart = ({ cart, setCart, databaseproducts }) => {
                 </div>
                 <div className={styles.placeholder} />
                 <div className={styles.priceandsubtotal}>
-                  <div>
-                    {products.find((product) => product.id === item.id)?.price}
-                  </div>
+                  <div>{item.price}</div>
                   <div className={styles.subtotal}>
-                    Subtotal:{' '}
-                    {products.find((product) => product.id === item.id)
-                      ?.price || 0 * item.amount}
+                    Subtotal: {calculateSubtotal(cart, item.id)}
                   </div>
                 </div>
               </div>
@@ -83,14 +74,14 @@ export const Cart = ({ cart, setCart, databaseproducts }) => {
           <div>
             <div className={styles.subtotal}>
               Shipping Fees:{' '}
-              {calculateTotal(cart, products) > minOrderValue ? 0 : shippingFee}
+              {calculateTotal(cart) > minOrderValue ? 0 : shippingFee}
             </div>
           </div>
           <div>
             <div className={styles.total}>
               Total:{' '}
               {calculateTotalwithShipping(
-                calculateTotal(cart, products),
+                calculateTotal(cart),
                 minOrderValue,
                 shippingFee,
               )}

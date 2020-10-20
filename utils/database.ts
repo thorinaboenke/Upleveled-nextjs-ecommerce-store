@@ -89,13 +89,19 @@ export async function getProducts() {
   SELECT * FROM products;`;
   return allProducts;
 }
+export async function getProductsByIds(ids: Id[]) {
+  if (ids.length !== 0) {
+    const productsByIds = sql<ProductList>`
+  SELECT * FROM products WHERE id IN (${ids});`;
+    return productsByIds;
+  } else return [];
+}
 
 export async function getProductById(id: Id) {
   if (!/^\d+$/.test(id.toString())) return undefined;
   const products = await sql<ProductList>`
 SELECT * FROM products WHERE
 id = ${id}`;
-  console.log('get product by id:', products[0]);
   return products[0];
 }
 

@@ -1,5 +1,5 @@
 import cookie from 'js-cookie';
-import { Id, ProductCart, ProductList } from './types';
+import { Id, ProductCart, MergedProduct } from './types';
 
 export function getCartFromCookies() {
   const cart = cookie.getJSON('cart') || [];
@@ -99,27 +99,17 @@ export function calculateTotalwithShipping(
   }
 }
 
-export function calculateTotal(cartForTotal: ProductCart, prod: ProductList) {
-  if (cartForTotal.length === 0) {
-    return 0;
-  }
-  const priceListIdsMatch = cartForTotal.map((item) => {
-    return prod.some((product) => product.id === item.id);
-  });
-  // gives out array with true or false
-  // check if every prodcut ID in the cart present in the Productlist, not the case if pricelistIdsMatch contains false
+export function calculateTotal(mergedCart: MergedProduct[]) {
+  return mergedCart.reduce((acc, curr) => {
+    return acc + curr.price * curr.amount;
+  }, 0);
+}
 
-  if (priceListIdsMatch.some((item) => item === false)) {
-    return 'Cannot find price for some products';
-  }
-
-  if (Array.isArray(prod) && Array.isArray(cartForTotal)) {
-    const total = cartForTotal.reduce((acc, curr) => {
-      return (
-        acc +
-        curr.amount * prod.find((product) => product.id === curr.id)!.price
-      );
-    }, 0);
-    return total;
-  }
+export function calculateSubtotal(mergedCart: MergedProduct[], id: Id) {
+  return mergedCart.reduce((acc, curr) => {
+    if (curr.id === id) return acc + curr.price * curr.amount;
+    else {
+      return acc;
+    }
+  }, 0);
 }
