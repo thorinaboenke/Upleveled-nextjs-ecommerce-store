@@ -32,6 +32,7 @@ export const Cart = ({ cart, setCart }) => {
                     <input
                       type="number"
                       min="1"
+                      max="99"
                       value={item.amount}
                       onChange={(e) => {
                         updateAmountInCartInCookie(

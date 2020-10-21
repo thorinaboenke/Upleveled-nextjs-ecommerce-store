@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-
 import { addAmountToCartInCookie, getCartFromCookies } from '../utils/cookies';
 import { Id, ProductCart } from '../utils/types';
 
@@ -31,6 +30,7 @@ export default function AddToCart(props: AddToCartProps) {
           aria-label="Quantity to add to cart"
           type="number"
           min="1"
+          max="99"
           placeholder="quantity"
           value={quantity}
           onChange={(e) => handleChange(e)}

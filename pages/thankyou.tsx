@@ -7,7 +7,7 @@ export default function ThankyouPage() {
   return (
     <div>
       <Head>
-        <title>Thank you!</title>
+        <title>Jawa Merch - Thank you for your purchase!</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout cart={[]}>

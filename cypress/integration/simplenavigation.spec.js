@@ -1,4 +1,4 @@
-describe('Simple Website Navigation Test', () => {
+describe('Website Navigation Test', () => {
   it('Header Navigation works', () => {
     cy.visit('http://localhost:3000');
     cy.contains('High quality second hand droids');

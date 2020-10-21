@@ -1,7 +1,6 @@
 import React, {
   useState,
   useCallback,
-  useEffect,
   Dispatch,
   SetStateAction,
   FunctionComponent,
@@ -44,12 +43,6 @@ export const SingleReview: FunctionComponent<ReviewProps> = ({
     return output;
   };
 
-  // we need a function to delete the review: call setReviewsByProduct Id on the List of reviews with the deleted one spliced out, wrapped in a callback
-  // const index = reviewsByProductId.indexOf(rev);
-  // const deleteReview = useCallback(() => {
-  //   setReviewsByProductId(reviewsByProductId.splice(index, 1));
-  // }, [reviewsByProductId, index, setReviewsByProductId]);
-
   const index = reviewsByProductId.indexOf(rev);
   const deleteReview = useCallback(() => {
     setReviewsByProductId(
@@ -59,7 +52,7 @@ export const SingleReview: FunctionComponent<ReviewProps> = ({
     );
   }, [reviewsByProductId, index, setReviewsByProductId]);
 
-  // we need a function that updates the Review list with the changed Item
+  //function that updates the Review list with the changed Item
   const updateReview = useCallback(() => {
     setReviewsByProductId(
       reviewsByProductId.map((review) =>
@@ -73,11 +66,12 @@ export const SingleReview: FunctionComponent<ReviewProps> = ({
   return (
     <>
       {!editReview ? (
-        <div aria-label={rev.rating + 'out of 5 stars'}>
+        <div cy-data="star-rating" aria-label={rev.rating + 'out of 5 stars'}>
           {outputRatingAsStars(rev.rating)}
         </div>
       ) : (
         <input
+          data-cy="edit-review-rating"
           aria-label="edit rating"
           type="number"
           min={1}
@@ -92,6 +86,7 @@ export const SingleReview: FunctionComponent<ReviewProps> = ({
         <div>{rev.reviewText}</div>
       ) : (
         <input
+          data-cy="edit-review-textfield"
           aria-label="edit rating text"
           type="text"
           defaultValue={rev.reviewText}
@@ -101,6 +96,7 @@ export const SingleReview: FunctionComponent<ReviewProps> = ({
       <div className={styles.editbuttons}>
         {editReview && (
           <button
+            data-cy="button-delete"
             aria-label="delete review"
             onClick={async () => {
               setLoading(true);
@@ -124,11 +120,15 @@ export const SingleReview: FunctionComponent<ReviewProps> = ({
             Delete
           </button>
         )}
-        <button onClick={() => setEditReview(!editReview)}>
+        <button
+          data-cy="button-edit-or-cancel"
+          onClick={() => setEditReview(!editReview)}
+        >
           {!editReview ? 'Edit' : 'Cancel'}
         </button>
         {editReview && (
           <button
+            data-cy="button-save-changes"
             onClick={async () => {
               await fetch(`/api/reviews/${rev.reviewId}`, {
                 method: 'PATCH',

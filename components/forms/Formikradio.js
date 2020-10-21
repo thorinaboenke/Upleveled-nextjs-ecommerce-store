@@ -22,7 +22,6 @@ function Formikradio(props) {
                         {...field}
                         {...rest}
                         value={option.value}
-                        // checked={field.value === option.value}
                       />
                     </div>
                   </React.Fragment>

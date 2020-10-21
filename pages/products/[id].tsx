@@ -176,12 +176,15 @@ export default function ProductPage(props: ProductPageProps) {
             {getAverageRating(reviewsByProductId)}
           </div>
           {!leaveReview && (
-            <button onClick={() => setLeaveReview(!leaveReview)}>
+            <button
+              data-cy="button-leave-review"
+              onClick={() => setLeaveReview(!leaveReview)}
+            >
               Leave a review
             </button>
           )}
           {leaveReview && (
-            <div>
+            <div data-cy="leave-review-form">
               <Formik
                 initialValues={{
                   productId: product.id,
@@ -203,11 +206,16 @@ export default function ProductPage(props: ProductPageProps) {
                       name="reviewText"
                       label="Your review"
                     />
-                    <button type="submit">Send</button>
+                    <button data-cy="button-send" type="submit">
+                      Send
+                    </button>
                   </Form>
                 )}
               </Formik>
-              <button onClick={() => setLeaveReview(!leaveReview)}>
+              <button
+                data-cy="button-cancel"
+                onClick={() => setLeaveReview(!leaveReview)}
+              >
                 Cancel
               </button>
             </div>
@@ -246,13 +254,11 @@ export default function ProductPage(props: ProductPageProps) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { getReviewsByProductId } = await import('../../utils/database');
-  const { getProductById } = await import('../../utils/database');
-  const { getProducts } = await import('../../utils/database');
+  const { getReviewsByProductId, getProductById, getProducts } = await import(
+    '../../utils/database'
+  );
   const products: ProductList = await getProducts();
   const allProductIds: Id[] = products.map((product: Product) => product.id);
-  console.log('allproduct ids', allProductIds);
-  console.log(typeof allProductIds[0]);
   const product = await getProductById(
     allProductIds[Number(context.query.id) - 1],
   );

@@ -15,12 +15,10 @@ const sql = postgres();
 // const sql =  postgres('postgres://username:password@localhost:5432/database
 //where username, password and database are the respective names for the database to connect)
 
-// here retireve the information from the table and save it in a variable
-const products = await sql`
-SELECT * from products;
-`;
+// here retireve the information from the table and save it in a variable and console log to check
+// const products = await sql`
+// SELECT * from products;
+// `;
 
-console.log(products);
+// console.log(products);
 process.exit(0);
-
-// run this scrip from the console with

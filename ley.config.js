@@ -10,4 +10,4 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = options;
 
-// Turn on SSL and do not verify certificate
+// if the environment is production, SSL do not verify certificate

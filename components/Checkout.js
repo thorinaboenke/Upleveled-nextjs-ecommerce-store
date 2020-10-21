@@ -19,22 +19,6 @@ const MyCheckbox = ({ children, ...props }) => {
   );
 };
 
-// const MyTextField = ({ label, ...props }) => {
-//   const [field, meta] = useField(props);
-//   return (
-//     <div className={styles.inlineblock}>
-//       <label>{label}</label>
-//       <br />
-//       <input {...field} {...props} />
-
-//       {meta.touched && meta.error ? (
-//         <div className="error">{meta.error}</div>
-//       ) : null}
-//       <br />
-//     </div>
-//   );
-// };
-
 export default function FormikCheckout() {
   const router = useRouter();
   return (

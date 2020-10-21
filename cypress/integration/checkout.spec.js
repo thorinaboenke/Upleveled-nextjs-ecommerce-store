@@ -23,7 +23,7 @@ describe('Simple Website Navigation Test', () => {
     // check for email error messages
     cy.contains('Invalid email address');
 
-    cy.get('input').eq(2).type('leia@organa.com');
+    cy.get('input').eq(2).type('@organa.com');
     cy.get('input').eq(3).type('Examplestreet 1');
     cy.get('input').eq(4).type('1234');
     cy.get('input').eq(5).type('Examplecity');
