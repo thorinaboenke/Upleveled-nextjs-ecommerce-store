@@ -19,7 +19,7 @@ npm
 
 ## Set up the database
 
-For setting up the database locally in this way this way you need to have PostgresQL installed.
+For setting up the database locally in this way you need to have PostgresQL installed.
 
 ```sh
 psql postgres
