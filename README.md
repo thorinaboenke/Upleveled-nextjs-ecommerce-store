@@ -23,7 +23,7 @@ With this application you can
 - checkout page
 - thank you page
 
-# Technologies used
+## Technologies used
 
 - Next.js
 - Postgres.js
@@ -32,7 +32,7 @@ With this application you can
 - Cypress.io
 - GitHub Actions
 
-# Libraries used
+## Libraries used
 
 - formik
 - cookies-js
@@ -72,13 +72,13 @@ GRANT ALL PRIVILEGES ON DATABASE <database_name> TO <user_name>;
 replacing <database_name>, <user_name>, <user_password> with the names you choose for the database
 
 
-Then, to connect to the new database first quit psql and reconnect
+Then, to connect to the new database first quit psql and reconnect via the newly created user
 ```sql
 \q
 psql -U <user_name> <database_name>
 ```
 
-Add the file .env in the project root, replacing <database_name> with the name you choose for the database.
+Add the file .env in the project root, setting the environment variables to the names you choose for the database, user and password.
 ```sh
 PGHOST=localhost
 PGDATABASE=<database_name>
@@ -91,16 +91,6 @@ Run the migrations with ley
 ```sh
 yarn dotenv ley up
 ```
-
-## Development
-
-start the development server:
-```bash
-npm run dev
-# or
-yarn dev
-```
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Testing
 
@@ -116,9 +106,24 @@ yarn jest
 yarn cypress start
 ```
 
-## Deploy your own
+## Deploying
 
-Deploy using [Heroku](https://heroku.com):
+### Development
+
+start the development server:
+```bash
+npm run dev
+# or
+yarn dev
+```
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+### Deploy via Heroku
+
+- create a new app
+- Connect to your Github Repo
+- Install the Heroku Postres Add-on
+- Deploy
 
 
 
