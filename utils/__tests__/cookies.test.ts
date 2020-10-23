@@ -3,7 +3,7 @@ import {
   updateAmountInCartInCookie,
   removeItemFromCartInCookie,
 } from '../cookies';
-import { ProductCart } from '../types';
+import { ProductCart, ProductInCart } from '../types';
 import cookie from 'js-cookie';
 
 const cartWithItem: ProductCart = [
@@ -86,7 +86,9 @@ test('deletes Item from Cart in Cookie', () => {
   );
   expect((newCart.length = cartWithItem.length - 1));
   expect((cookie.getJSON('cart').length = cartWithItem.length - 1));
-  expect(cookie.getJSON('cart').some((item) => item.id === testId)).toBe(false);
+  expect(
+    cookie.getJSON('cart').some((item: ProductInCart) => item.id === testId),
+  ).toBe(false);
   expect(newCart.some((item) => item.id === testId)).toBe(false);
 
   const deleteFromEmptyCart = removeItemFromCartInCookie(testId, []);
