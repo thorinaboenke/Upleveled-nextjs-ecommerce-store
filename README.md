@@ -23,10 +23,14 @@ With this application you can
 - checkout page
 - thank you page
 
+### Landingpage
 <img src="https://github.com/thorinaboenke/nextjs-ecommerce-store/blob/master/markdown/img1.png" width="500" alt='landingpage'>
+### Products Overview
 <img src="https://github.com/thorinaboenke/nextjs-ecommerce-store/blob/master/markdown/img2.png" width="500" alt='product overview'>
+### Shopping Cart
 <img src="https://github.com/thorinaboenke/nextjs-ecommerce-store/blob/master/markdown/img3.png" width="500" alt='cart'>
-<img src="https://github.com/thorinaboenke/nextjs-ecommerce-store/blob/master/markdown/img4.png" width="500" alt='product'>
+### Single Product Page
+<img src="https://github.com/thorinaboenke/nextjs-ecommerce-store/blob/master/markdown/img4.png" width="300" alt='product'>
 
 ## Technologies used
 
