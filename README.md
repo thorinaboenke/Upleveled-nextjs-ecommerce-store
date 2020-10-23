@@ -23,7 +23,7 @@ With this application you can
 - checkout page
 - thank you page
 
-![landingpage](markdown/img1.png =250x250) ![Shop](markdown/img2.png 'Shop') ![Product](markdown/img3.png 'Pruduct') ![Cart](markdown/img4.png 'Cart')
+![landingpage](markdown/img1.png | width=100) ![Shop](markdown/img2.png 'Shop') ![Product](markdown/img3.png 'Pruduct') ![Cart](markdown/img4.png 'Cart')
 
 ## Technologies used
 
