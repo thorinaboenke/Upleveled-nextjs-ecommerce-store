@@ -56,14 +56,13 @@ npm
 
 ## Set up the database
 
-For setting up the database first install [PostgresQL](https://www.postgresql.org) on your machine.
-
+To set up the database first install [PostgresQL](https://www.postgresql.org) on your machine.
+Connect to postgres
 ```sh
 psql postgres
 ```
 
-Then run
-
+Create a new database and user
 ```sql
 CREATE DATABASE <database_name>;
 CREATE USER <user_name> WITH ENCRYPTED PASSWORD '<user_password>';
@@ -71,8 +70,7 @@ GRANT ALL PRIVILEGES ON DATABASE <database_name> TO <user_name>;
 ```
 replacing <database_name>, <user_name>, <user_password> with the names you choose for the database
 
-
-Then, to connect to the new database first quit psql and reconnect via the newly created user
+To connect to the new database first quit psql and reconnect via the newly created user
 ```sql
 \q
 psql -U <user_name> <database_name>
@@ -120,8 +118,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ### Deploy via Heroku
 
-- create a new app
-- Connect to your Github Repo
+- Create a new app via the dashboard
+- Connect to the repository
 - Install the Heroku Postres Add-on
 - Deploy
 
