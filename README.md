@@ -1,8 +1,45 @@
 # Next.js E-commerce Store
 Created during UpLeveled Web Development Bootcamp Vienna September 2020.
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) and a small [PostgresQL](https://www.postgresql.org) database.
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) and a [PostgresQL](https://www.postgresql.org) database.
 
+## Features
+
+With this application you can
+- search and filter products
+- add products to basket
+- remove products from basket
+- update products in basket
+- leave reviews on product pages
+- edit or delete reviews
+- fill out shipment and payment infos (with form validation)
+
+## Pages
+
+- landingpage
+- products overview
+- single product page
+- shopping cart
+- checkout page
+- thank you page
+
+# Technologies used
+
+- Next.js
+- Postgres.js
+- GraphQL
+- Jest
+- Cypress.io
+- GitHub Actions
+
+# Libraries used
+
+- formik
+- cookies-js
+- nextcookies
+- camelcase-keys
+- ley
+- dotenv
 
 ## Getting started
 
@@ -19,13 +56,13 @@ npm
 
 ## Set up the database
 
-For setting up the database locally in this way you need to have PostgresQL installed.
+For setting up the database first install [PostgresQL](https://www.postgresql.org) on your machine.
 
 ```sh
 psql postgres
 ```
 
-In there run
+Then run
 
 ```sql
 CREATE DATABASE <database_name>;
@@ -35,7 +72,7 @@ GRANT ALL PRIVILEGES ON DATABASE <database_name> TO <user_name>;
 replacing <database_name>, <user_name>, <user_password> with the names you choose for the database
 
 
-Then, to connect to the new database quit psql and reconnect
+Then, to connect to the new database first quit psql and reconnect
 ```sql
 \q
 psql -U <user_name> <database_name>
@@ -44,12 +81,12 @@ psql -U <user_name> <database_name>
 Add the file .env in the project root, replacing <database_name> with the name you choose for the database.
 ```sh
 PGHOST=localhost
-PGDATABASE=<password_name>
+PGDATABASE=<database_name>
 PGUSERNAME=<user_name>
 PGPASSWORD=<user_password>
 ```
 
-Run the migrations
+Run the migrations with ley
 
 ```sh
 yarn dotenv ley up
@@ -64,6 +101,20 @@ npm run dev
 yarn dev
 ```
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Testing
+
+### Unit tests with Jest
+
+```bash
+yarn jest
+```
+
+### End to end tests with Cypress
+
+```bash
+yarn cypress start
+```
 
 ## Deploy your own
 
