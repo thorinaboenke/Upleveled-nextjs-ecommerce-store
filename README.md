@@ -23,6 +23,8 @@ With this application you can
 - checkout page
 - thank you page
 
+
+
 ## Technologies used
 
 - Next.js
