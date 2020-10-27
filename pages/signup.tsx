@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import FormikSignup from '../components/Signup';
+import FormikSignup from '../drafts/Signup';
 
 export default function SignUpPage() {
   return (

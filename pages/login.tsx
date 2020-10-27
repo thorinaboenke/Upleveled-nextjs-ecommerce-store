@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import React from 'react';
-import FormikLogin from '../components/Login';
+import FormikLogin from '../drafts/Login';
 
 export default function LoginPage() {
   return (

@@ -29,7 +29,8 @@ export default function CartPage(props: CartProps) {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { getProductsByIds } = await import('../utils/database');
   const allCookies = nextCookies(context);
-  const cartFromCookies = (allCookies.cart as unknown) as ProductInCart[];
+  const cartFromCookies =
+    ((allCookies.cart as unknown) as ProductInCart[]) || [];
 
   const idsToFetch = cartFromCookies.map((item) => item.id);
   const productsByIds = await getProductsByIds(idsToFetch);
