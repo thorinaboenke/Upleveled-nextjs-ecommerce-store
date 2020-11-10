@@ -5,7 +5,6 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Features
 
-With this application you can
 - search and filter products
 - add products to basket
 - remove products from basket
