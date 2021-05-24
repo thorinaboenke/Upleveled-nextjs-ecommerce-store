@@ -17,7 +17,7 @@
     "camelcase-keys": "^6.2.2",
     "dotenv": "^8.2.0",
     "dotenv-cli": "^4.0.0",
-    "formik": "^2.1.7",
+    "formik": "^2.2.8",
     "graphql": "^15.3.0",
     "js-cookie": "^2.2.1",
     "ley": "^0.6.0",
